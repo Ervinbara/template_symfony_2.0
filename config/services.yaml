@@ -1,0 +1,24 @@
+# config/services.yaml
+
+parameters:
+
+services:
+    App\Security\GoogleAuthenticator:
+        arguments:
+            $clientRegistry: '@knpu.oauth2.client_registry'
+            $entityManager: '@doctrine.orm.entity_manager'
+            $router: '@router'
+            $logger: '@logger'
+        tags:
+            - { name: 'security.authenticator' }
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
