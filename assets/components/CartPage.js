@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Importer useNavigate
 
 const CartPage = () => {
     // États pour gérer les éléments du panier, le chargement et les erreurs
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate(); // Utiliser useNavigate
 
     // Utilisation de useEffect pour charger les éléments du panier au montage du composant
     useEffect(() => {
@@ -29,6 +31,11 @@ const CartPage = () => {
         fetchCart(); // Appel de la fonction pour récupérer les données du panier
     }, []); // Dépendance vide pour que l'effet ne s'exécute qu'au montage
 
+    // Fonction pour rediriger vers la page de validation
+    const handleCheckout = () => {
+        navigate('/checkout'); // Utiliser navigate au lieu de history.push
+    };
+    
     // Fonction pour mettre à jour la quantité d'un élément dans le panier
     const updateCartItem = async (cartItemId, quantity) => {
         try {
@@ -119,6 +126,7 @@ const CartPage = () => {
                     ))}
                 </ul>
             )}
+            <button onClick={handleCheckout}>Valider la Commande</button>
         </div>
     );
 };

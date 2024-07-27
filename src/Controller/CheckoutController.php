@@ -16,6 +16,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CheckoutController extends AbstractController
 {
+    #[Route('/checkout', name: 'checkoutRecap')]
+    public function showCheckoutPage(): Response
+    {
+        return $this->render('checkout/index.html.twig');
+    }
+
     #[Route('/api/checkout', name: 'checkout', methods: ['POST'])]
     public function checkout(Request $request, CartRepository $cartRepository, EntityManagerInterface $entityManager): Response
     {
@@ -26,14 +32,27 @@ class CheckoutController extends AbstractController
         }
 
         $data = json_decode($request->getContent(), true);
-        $paymentMethod = $data['payment_method'];
+
+        // Ajoutez des logs pour inspecter les données reçues
+        error_log('Received data: ' . print_r($data, true));
+
+        if (!$data) {
+            return $this->json(['error' => 'Invalid JSON'], 400);
+        }
+
+        $address = $data['address'] ?? null;
+        $paymentMethod = $data['payment_method'] ?? null;
+
+        if (!$address || !$paymentMethod) {
+            return $this->json(['error' => 'Address and payment method are required'], 400);
+        }
 
         $order = new Order();
         $order->setUser($user);
         $order->setTotalPrice(array_reduce($cart->getCartItems()->toArray(), fn($sum, $item) => $sum + $item->getProduct()->getPrice() * $item->getQuantity(), 0));
         $order->setStatus('Pending');
         $order->setCreatedAt(new \DateTimeImmutable());
-        
+
         $entityManager->persist($order);
 
         foreach ($cart->getCartItems() as $cartItem) {
@@ -51,9 +70,14 @@ class CheckoutController extends AbstractController
         $payment->setPaymentMethod($paymentMethod);
         $payment->setStatus('Pending');
         $payment->setCreatedAt(new \DateTimeImmutable());
-        
+
         $entityManager->persist($payment);
-        $entityManager->flush();
+
+        try {
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            return $this->json(['error' => 'Error while saving data: ' . $e->getMessage()], 500);
+        }
 
         return $this->json(['status' => 'Order placed successfully'], 201);
     }
