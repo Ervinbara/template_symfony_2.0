@@ -1,0 +1,106 @@
+/* Conteneur principal du panier */
+.cart-container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+/* Titre du panier */
+.cart-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Liste des articles du panier */
+.cart-item-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Élément de la liste */
+.cart-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* Détails de l'article */
+.cart-item-details {
+    flex: 1;
+    margin-left: 20px;
+}
+
+/* Nom du produit */
+.cart-item-name {
+    font-size: 18px;
+    margin: 0 0 5px;
+}
+
+/* Quantité et prix */
+.cart-item-quantity,
+.cart-item-price {
+    margin: 0;
+}
+
+/* Boutons d'action */
+.cart-item-buttons {
+    display: flex;
+    align-items: center;
+}
+
+/* Boutons d'incrémentation et décrémentation */
+.quantity-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0 5px;
+}
+
+/* Bouton de suppression */
+.remove-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* Boutons de suppression et validation */
+.remove-button:hover,
+.quantity-button:hover {
+    opacity: 0.8;
+}
+
+/* Message lorsque le panier est vide */
+.empty-cart-message {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    margin-top: 20px;
+}
+
+/* Résumé du panier */
+.cart-summary {
+    margin-top: 20px;
+    text-align: right;
+}
+
+/* Bouton de validation de commande */
+.checkout-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.checkout-button:hover {
+    background-color: #45a049;
+}
