@@ -2,10 +2,28 @@
 
 namespace App\Entity;
 
-use App\Repository\CartItemRepository;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\CartItemRepository;
+use ApiPlatform\Metadata\GetCollection;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: CartItemRepository::class)]
+#[ApiResource(
+    normalizationContext: ['groups' => ['cart_item:read']],
+    denormalizationContext: ['groups' => ['cart_item:write']],
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Post(),
+        new Put(),
+        new Delete()
+    ]
+)]
 class CartItem
 {
     #[ORM\Id]
@@ -17,6 +35,7 @@ class CartItem
     private ?Cart $cart = null;
 
     #[ORM\ManyToOne(inversedBy: 'cartItems')]
+    #[Groups(['cart_item:read', 'cart:read'])]
     private ?Product $product = null;
 
     #[ORM\Column]

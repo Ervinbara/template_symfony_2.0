@@ -1,0 +1,18 @@
+/* assets/components/ProductList.css */
+
+.product-list {
+    margin: 2em auto;
+    max-width: 1200px;
+    width: 95%;
+}
+
+.product-list-title {
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.product-list-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}

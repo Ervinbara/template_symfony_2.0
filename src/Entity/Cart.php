@@ -1,11 +1,13 @@
 <?php
 
+
 namespace App\Entity;
 
 use App\Repository\CartRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CartRepository::class)]
 class Cart
@@ -13,21 +15,26 @@ class Cart
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['cart:read', 'cart:write'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'carts')]
+    #[Groups(['cart:read', 'cart:write'])]
     private ?User $user = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['cart:read', 'cart:write'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['cart:read', 'cart:write'])]
     private ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * @var Collection<int, CartItem>
      */
-    #[ORM\OneToMany(targetEntity: CartItem::class, mappedBy: 'cart')]
+    #[ORM\OneToMany(targetEntity: CartItem::class, mappedBy: 'cart', cascade: ['persist', 'remove'])]
+    #[Groups(['cart:read', 'cart:write'])]
     private Collection $cartItems;
 
     public function __construct()
@@ -48,7 +55,6 @@ class Cart
     public function setUser(?User $user): static
     {
         $this->user = $user;
-
         return $this;
     }
 
@@ -60,7 +66,6 @@ class Cart
     public function setCreatedAt(?\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
 
@@ -72,7 +77,6 @@ class Cart
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
-
         return $this;
     }
 
@@ -97,7 +101,6 @@ class Cart
     public function removeCartItem(CartItem $cartItem): static
     {
         if ($this->cartItems->removeElement($cartItem)) {
-            // set the owning side to null (unless already changed)
             if ($cartItem->getCart() === $this) {
                 $cartItem->setCart(null);
             }

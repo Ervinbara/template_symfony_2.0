@@ -2,65 +2,132 @@
 
 namespace App\Entity;
 
+use App\Entity\Review;
+use App\Entity\CartItem;
+use App\Entity\Favorite;
+use App\Entity\OrderItem;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Delete;
+use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Entity\File;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ProductRepository;
-use Doctrine\Common\Collections\ArrayCollection;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['product:read']],
+    denormalizationContext: ['groups' => ['product:write']],
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Post(),
+        new Put(),
+        new Delete()
+    ]
+)]
 class Product
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['product:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['product:read', 'product:write'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['product:read', 'product:write'])]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Groups(['product:read', 'product:write'])]
     private ?float $price = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['product:read', 'product:write'])]
     private ?int $stock = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
+    #[Groups(['product:read', 'product:write'])]
     private ?Category $category = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['product:read'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['product:read'])]
     private ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * @var Collection<int, OrderItem>
      */
     #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'product')]
+    #[Groups(['product:read'])]
     private Collection $orderItems;
 
     /**
      * @var Collection<int, CartItem>
      */
     #[ORM\OneToMany(targetEntity: CartItem::class, mappedBy: 'product')]
+    #[Groups(['product:read'])]
     private Collection $cartItems;
 
     /**
      * @var Collection<int, Review>
      */
     #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'product')]
+    #[Groups(['product:read'])]
     private Collection $reviews;
 
     /**
      * @var Collection<int, Favorite>
      */
     #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'product')]
+    #[Groups(['product:read'])]
     private Collection $favorites;
+
+
+    #[Vich\UploadableField(mapping: 'product_image', fileNameProperty: 'image')]
+    private ?File $imageFile = null;
+    
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['product:read', 'product:write'])]
+    private ?string $image = null;
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+        if ($imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
 
     public function __construct()
     {

@@ -69,8 +69,8 @@ class GoogleAuthenticator extends OAuth2Authenticator
             $this->logger->info('Fetched Google user', ['user' => $googleUser]);
 
             $email = $googleUser->getEmail();
-            $firstName = $googleUser->getFirstName();
-            $lastName = $googleUser->getLastName();
+            $firstName = $googleUser->getFirstName() ?? ''; // Utiliser une chaîne vide si firstName est null
+            $lastName = $googleUser->getLastName() ?? '';  
 
             $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
 

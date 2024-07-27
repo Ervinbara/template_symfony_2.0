@@ -2,34 +2,47 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ReviewRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
+#[ApiResource(
+    normalizationContext: ['groups' => ['review:read']],
+    denormalizationContext: ['groups' => ['review:write']]
+)]
 class Review
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['review:read', 'product:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
+    #[Groups(['review:read', 'review:write', 'product:read'])]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
+    #[Groups(['review:read', 'review:write'])]
     private ?Product $product = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['review:read', 'review:write', 'product:read'])]
     private ?int $rating = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['review:read', 'review:write', 'product:read'])]
     private ?string $comment = null;
 
     #[ORM\Column]
+    #[Groups(['review:read'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['review:read'])]
     private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
