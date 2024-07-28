@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from '@stripe/react-stripe-js';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';  // Utiliser useNavigate au lieu de useHistory
 
 const Checkout = () => {
     const stripe = useStripe();
     const elements = useElements();
-    const history = useHistory();
+    const navigate = useNavigate();  // Utiliser useNavigate
+
     const [addresses, setAddresses] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState('');
     const [newAddress, setNewAddress] = useState({ street: '', city: '', state: '', zipcode: '', country: '' });
@@ -77,10 +78,9 @@ const Checkout = () => {
                 address,
             });
 
+            alert('Order placed successfully!');
             console.log('Order placed successfully', response.data);
-            // Afficher un message de succès
-            setError('Order placed successfully!');
-            history.push('/product'); // Redirection vers la page d'accueil
+            navigate('/product');  // Utiliser navigate pour rediriger
         } catch (error) {
             console.error('Error submitting order', error.response.data);
             setError('Error submitting order: ' + error.response.data.error);

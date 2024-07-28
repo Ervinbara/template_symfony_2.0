@@ -122,6 +122,10 @@ class CheckoutController extends AbstractController
         }
         $entityManager->flush();
 
-        return $this->json(['success' => true, 'message' => 'Order placed successfully'], 201);
+        // return $this->redirect($this->generateUrl('product_index'));
+        // return $this->redirect('http://localhost:8000/product');
+        return $this->redirect('/product');
+
+        // return $this->json(['success' => true, 'message' => 'Order placed successfully'], 201);
     }
 }
