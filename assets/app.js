@@ -5,9 +5,9 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import ProductList from './components/ProductList';
-import CartPage from './components/CartPage';
-import Checkout from './components/Checkout';
+import ProductList from './components/Product/ProductList';
+import CartPage from './components/Payment/CartPage';
+import Checkout from './components/Payment/Checkout';
 import Navbar from './components/Navbar';
 
 const stripePromise = loadStripe('pk_test_51PhTvTKuzPUvarsT4RFUKX7BKF1IBavWFROrhpi1zo0jpXafWwSwV4oFYfdWpz8ckvMvH19i2ULzSgmY717bths700WxYSSvQU');
