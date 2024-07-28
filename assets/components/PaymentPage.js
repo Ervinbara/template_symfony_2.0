@@ -1,11 +1,10 @@
-// PaymentPage.js
 import React from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from './CheckoutForm';
 
-// Stripe public key
-const stripePromise = loadStripe('your-stripe-public-key');
+// Load Stripe public key from environment variables
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const PaymentPage = () => {
     return (

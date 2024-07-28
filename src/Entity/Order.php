@@ -30,6 +30,24 @@ class Order
     #[ORM\OneToOne(mappedBy: 'p_order', cascade: ['persist', 'remove'])]
     private ?Payment $payment = null;
 
+        /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Address")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $shippingAddress;
+
+    public function getShippingAddress(): ?Address
+    {
+        return $this->shippingAddress;
+    }
+
+    public function setShippingAddress(?Address $shippingAddress): self
+    {
+        $this->shippingAddress = $shippingAddress;
+
+        return $this;
+    }
+
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 

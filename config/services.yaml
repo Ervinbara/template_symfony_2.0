@@ -1,7 +1,7 @@
 # config/services.yaml
 
 parameters:
-
+    stripe_secret_key: '%env(STRIPE_SECRET_KEY)%'
 services:
     App\Security\GoogleAuthenticator:
         arguments:
