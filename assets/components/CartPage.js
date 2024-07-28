@@ -112,7 +112,13 @@ const CartPage = () => {
             )}
             <div className="cart-summary">
                 <p className="cart-total">Total du Panier: ${calculateTotal()}</p>
-                <button className="checkout-button" onClick={handleCheckout}>Valider la Commande</button>
+                <button 
+                    className="checkout-button" 
+                    onClick={handleCheckout} 
+                    disabled={cartItems.length === 0} // Désactiver le bouton si le panier est vide
+                >
+                    Valider la Commande
+                </button>
             </div>
         </div>
     );

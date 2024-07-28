@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from '@stripe/react-stripe-js';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';  // Utiliser useNavigate au lieu de useHistory
+import { useNavigate } from 'react-router-dom'; 
+import Select from 'react-select';
+import countryList from 'react-select-country-list';
 
 const Checkout = () => {
     const stripe = useStripe();
     const elements = useElements();
-    const navigate = useNavigate();  // Utiliser useNavigate
+    const navigate = useNavigate();  
 
     const [addresses, setAddresses] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState('');
     const [newAddress, setNewAddress] = useState({ street: '', city: '', state: '', zipcode: '', country: '' });
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+
+    // Convert country list into options with country code
+    const countryOptions = countryList().getData().map(country => ({
+        value: country.value,
+        label: country.label
+    }));
 
     useEffect(() => {
         const fetchAddresses = async () => {
@@ -80,7 +88,7 @@ const Checkout = () => {
 
             alert('Order placed successfully!');
             console.log('Order placed successfully', response.data);
-            navigate('/product');  // Utiliser navigate pour rediriger
+            navigate('/product');
         } catch (error) {
             console.error('Error submitting order', error.response.data);
             setError('Error submitting order: ' + error.response.data.error);
@@ -136,11 +144,11 @@ const Checkout = () => {
                             value={newAddress.zipcode}
                             onChange={(e) => setNewAddress({ ...newAddress, zipcode: e.target.value })}
                         />
-                        <input
-                            type="text"
-                            placeholder="Country"
-                            value={newAddress.country}
-                            onChange={(e) => setNewAddress({ ...newAddress, country: e.target.value })}
+                        <Select
+                            options={countryOptions}
+                            value={countryOptions.find(option => option.value === newAddress.country)}
+                            onChange={(option) => setNewAddress({ ...newAddress, country: option.value })}
+                            placeholder="Select a country"
                         />
                     </div>
                 )}

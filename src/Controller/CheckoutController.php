@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 
 // src/Controller/CheckoutController.php
 
@@ -54,14 +53,28 @@ class CheckoutController extends AbstractController
 
         $address = null;
         if (is_array($addressData)) {
-            $address = new Address();
-            $address->setUser($user);
-            $address->setStreet($addressData['street'] ?? null);
-            $address->setCity($addressData['city'] ?? null);
-            $address->setState($addressData['state'] ?? null);
-            $address->setZipcode($addressData['zipcode'] ?? null);
-            $address->setCountry($addressData['country'] ?? null);
-            $entityManager->persist($address);
+            // Check if the address already exists for the user
+            $existingAddress = $entityManager->getRepository(Address::class)->findOneBy([
+                'user' => $user,
+                'street' => $addressData['street'],
+                'city' => $addressData['city'],
+                'state' => $addressData['state'],
+                'zipcode' => $addressData['zipcode'],
+                'country' => $addressData['country']
+            ]);
+
+            if ($existingAddress) {
+                $address = $existingAddress;
+            } else {
+                $address = new Address();
+                $address->setUser($user);
+                $address->setStreet($addressData['street'] ?? null);
+                $address->setCity($addressData['city'] ?? null);
+                $address->setState($addressData['state'] ?? null);
+                $address->setZipcode($addressData['zipcode'] ?? null);
+                $address->setCountry($addressData['country'] ?? null);
+                $entityManager->persist($address);
+            }
         } else {
             $address = $entityManager->getRepository(Address::class)->find($addressData);
             if (!$address || $address->getUser() !== $user) {
@@ -122,10 +135,6 @@ class CheckoutController extends AbstractController
         }
         $entityManager->flush();
 
-        // return $this->redirect($this->generateUrl('product_index'));
-        // return $this->redirect('http://localhost:8000/product');
         return $this->redirect('/product');
-
-        // return $this->json(['success' => true, 'message' => 'Order placed successfully'], 201);
     }
 }
