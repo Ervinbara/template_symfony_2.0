@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard'; // Import du composant ProductCard pour afficher les produits
-import '../styles/ProductList.css'; // Import des styles pour la liste de produits
+import '../../styles/ProductList.css'; // Import des styles pour la liste de produits
 import axios from 'axios'; // Import d'axios pour les requêtes HTTP
 
 const ProductList = () => {
