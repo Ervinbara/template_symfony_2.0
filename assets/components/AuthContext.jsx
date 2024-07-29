@@ -20,8 +20,22 @@ export const AuthProvider = ({ children }) => {
         checkAuth();
     }, []);
 
+    // Fonction pour gérer la déconnexion
+    const logout = async () => {
+        try {
+            await fetch('/logout', {
+                method: 'POST', // ou 'GET' selon votre configuration Symfony
+                credentials: 'include' // Assurez-vous que les cookies de session sont envoyés avec la requête
+            });
+            setIsAuthenticated(false);
+            window.location.href = '/'; // Redirection après déconnexion
+        } catch (error) {
+            console.error('Erreur lors de la déconnexion:', error);
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, logout }}>
             {children}
         </AuthContext.Provider>
     );

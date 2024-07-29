@@ -21,9 +21,14 @@ const Navbar = () => {
                         <Link className="nav-link" to="/cart">Cart</Link>
                     </li>
                     {isAuthenticated ? (
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/logout">Logout</Link>
-                        </li>
+                         <li className="nav-item">
+                         <button
+                             className="nav-link btn btn-link"
+                             onClick={logout} // Appel de la fonction de déconnexion
+                         >
+                             Logout
+                         </button>
+                     </li>
                     ) : (
                         <>
                             <li className="nav-item">
