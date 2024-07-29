@@ -12,13 +12,20 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
-                        <Link className="nav-link" to="/product">Home</Link>
+                        <Link className="nav-link" to="/product">Produits</Link>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" to="/cart">Cart</Link>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" to="/checkout">Checkout</Link>
+                    </li>
+                    {/* Liens pour les pages d'authentification */}
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/login">Login</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/register">Register</Link>
                     </li>
                 </ul>
             </div>

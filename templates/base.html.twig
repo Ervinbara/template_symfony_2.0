@@ -9,11 +9,11 @@
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
+</head>
+<body>
+    <div id="root"></div>
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
-</head>
-<body>
-    {% block body %}{% endblock %}
 </body>
 </html>

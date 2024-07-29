@@ -9,6 +9,8 @@ import ProductList from './components/Product/ProductList';
 import CartPage from './components/Payment/CartPage';
 import Checkout from './components/Payment/Checkout';
 import Navbar from './components/Navbar';
+import LoginForm from './components/Forms/LoginForm';
+import RegisterForm from './components/Forms/RegisterForm';
 
 const stripePromise = loadStripe('pk_test_51PhTvTKuzPUvarsT4RFUKX7BKF1IBavWFROrhpi1zo0jpXafWwSwV4oFYfdWpz8ckvMvH19i2ULzSgmY717bths700WxYSSvQU');
 
@@ -26,6 +28,8 @@ root.render(
                         <Checkout />
                     </Elements>
                 } />
+                <Route path="/login" element={<LoginForm />} />
+                <Route path="/register" element={<RegisterForm />} />
             </Routes>
         </Router>
     </React.StrictMode>

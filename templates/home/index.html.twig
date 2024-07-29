@@ -1,29 +1,8 @@
-{# templates/home/index.html.twig #}
+{# templates/product/index.html.twig #}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
-</head>
-<body>
-    <div id="root"></div>
-    <header>
-        <h1>Welcome to the Home Page</h1>
-        <nav>
-            <a href="{{ path('app_home') }}">Home</a>
-            {# <a href="{{ path('app_profile') }}">Profile</a> #}
-            <a href="{{ path('app_logout') }}">Logout</a>
-        </nav>
-    </header>
+{% extends 'base.html.twig' %}
 
-    <main>
-        <p>This is the home page of your application.</p>
-    </main>
+{% block title %}Main{% endblock %}
 
-    <footer>
-        <p>&copy; {{ "now"|date("Y") }} Your Company</p>
-    </footer>
-</body>
-</html>
+{% block body %}
+{% endblock %}
