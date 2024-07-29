@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Product;
 use App\Entity\Order;
 use App\Entity\OrderItem;
+use App\Entity\Banner;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -72,6 +73,20 @@ class AppFixtures extends Fixture
             }
 
             $order->setTotalPrice($totalPrice);
+        }
+
+        // Création de 3 bannières
+        $banners = [
+            ['type' => 'image', 'src' => '/images/banners/banner-roni.jpg', 'altText' => 'Banner 1'],
+            ['type' => 'image', 'src' => '/images/banners/banner-roni.jpg', 'altText' => 'Banner 2']
+        ];
+
+        foreach ($banners as $bannerData) {
+            $banner = new Banner();
+            $banner->setType($bannerData['type']);
+            $banner->setSrc($bannerData['src']);
+            $banner->setAltText($bannerData['altText']);
+            $manager->persist($banner);
         }
 
         $manager->flush();

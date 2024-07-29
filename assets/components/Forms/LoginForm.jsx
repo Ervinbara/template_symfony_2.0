@@ -1,14 +1,11 @@
-// assets/components/Forms/LoginForm.jsx
+// assets/components/Pages/LoginPage.jsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext'; // Assurez-vous du bon chemin
+import '../../styles/AuthPage.css'; // Importation des styles spécifiques
 
-const LoginForm = () => {
+const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
-    const { setIsAuthenticated } = useAuth(); // Accédez à setIsAuthenticated depuis le contexte
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,55 +22,65 @@ const LoginForm = () => {
             });
 
             if (response.ok) {
-                // Mettez à jour le contexte d'authentification
-                setIsAuthenticated(true);
-                navigate('/');
+                // Authentification réussie
+                window.location.href = '/'; // Redirection vers la page d'accueil
             } else {
-                // Affichez une erreur si l'authentification échoue
+                // Affichage des erreurs
                 const errorText = await response.text();
                 setError(errorText);
             }
         } catch (error) {
-            // Affichez les erreurs de la requête
             setError('An error occurred: ' + error.message);
         }
     };
 
     return (
-        <div>
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="email">Email:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="_username"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
+        <div className="auth-page">
+            <header className="auth-header">
+                <img src="/path/to/logo.png" alt="Logo" className="auth-logo" />
+                <h1 className="auth-title">Login</h1>
+            </header>
+
+            <main className="auth-main">
+                <p className="auth-message">Enter your email and password to log in.</p>
+                <form onSubmit={handleSubmit} className="auth-form">
+                    <div className="form-group">
+                        <label htmlFor="email">Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            className="form-input"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Password:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            className="form-input"
+                        />
+                    </div>
+                    {error && <div className="error-message">{error}</div>}
+                    <button type="submit" className="submit-button">Login</button>
+                </form>
+                <div className="auth-links">
+                    <a href="/register">Register</a>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="_password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit">Login</button>
-            </form>
-            {error && <div className="error">{error}</div>}
-            <div>
-                <a href="/connect-google">Connect with Google</a>
-            </div>
-            <a href="/register">Register</a>
+            </main>
+
+            <footer className="auth-footer">
+                <a href="/terms-of-use" className="footer-link">Terms of Use</a>
+                <a href="/privacy-policy" className="footer-link">Privacy Policy</a>
+                <a href="/contact-us" className="footer-link">Contact Us</a>
+            </footer>
         </div>
     );
 };
 
-export default LoginForm;
+export default LoginPage;

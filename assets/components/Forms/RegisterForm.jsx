@@ -1,83 +1,96 @@
-// assets/components/Forms/RegisterForm.jsx
+// assets/components/Pages/RegisterPage.jsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import '../../styles/AuthPage.css'; // Importation des styles spécifiques
 
-const RegisterForm = () => {
+const RegisterPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
             setError('Passwords do not match');
             return;
         }
 
-        fetch('/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password, confirmPassword })
-        })
-        .then(response => {
+        try {
+            const response = await fetch('/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password, confirmPassword })
+            });
+
             if (response.ok) {
-                navigate('/login'); // Redirection après inscription réussie
+                window.location.href = '/login'; // Redirection vers la page de connexion
             } else {
-                return response.json().then(data => {
-                    setError(data.error || 'Registration failed'); // Affiche les erreurs détaillées
-                });
+                const data = await response.json();
+                setError(data.error || 'Registration failed');
             }
-        })
-        .catch(error => {
+        } catch (error) {
             setError('An error occurred: ' + error.message);
-        });
+        }
     };
 
     return (
-        <div>
-            <h1>Register</h1>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="email">Email:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
+        <div className="auth-page">
+            <header className="auth-header">
+                <img src="/path/to/logo.png" alt="Logo" className="auth-logo" />
+                <h1 className="auth-title">Register</h1>
+            </header>
+
+            <main className="auth-main">
+                <p className="auth-message">Create an account to get started.</p>
+                <form onSubmit={handleSubmit} className="auth-form">
+                    <div className="form-group">
+                        <label htmlFor="email">Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            className="form-input"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Password:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            className="form-input"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="confirm-password">Confirm Password:</label>
+                        <input
+                            type="password"
+                            id="confirm-password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                            className="form-input"
+                        />
+                    </div>
+                    {error && <div className="error-message">{error}</div>}
+                    <button type="submit" className="submit-button">Register</button>
+                </form>
+                <div className="auth-links">
+                    <a href="/login">Back to Login</a>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="confirm-password">Confirm Password:</label>
-                    <input
-                        type="password"
-                        id="confirm-password"
-                        name="confirmPassword"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit">Register</button>
-            </form>
-            {error && <div className="error">{error}</div>}
-            <a href="/login">Back to login</a>
+            </main>
+
+            <footer className="auth-footer">
+                <a href="/terms-of-use" className="footer-link">Terms of Use</a>
+                <a href="/privacy-policy" className="footer-link">Privacy Policy</a>
+                <a href="/contact-us" className="footer-link">Contact Us</a>
+            </footer>
         </div>
     );
 };
 
-export default RegisterForm;
+export default RegisterPage;
