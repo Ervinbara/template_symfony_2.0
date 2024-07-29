@@ -6,27 +6,32 @@ const RegisterForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
-            console.error('Passwords do not match');
+            setError('Passwords do not match');
             return;
         }
-        // Effectuer l'inscription via fetch ou axios
+
         fetch('/register', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ email, password })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password, confirmPassword })
         })
         .then(response => {
             if (response.ok) {
                 navigate('/login'); // Redirection après inscription réussie
             } else {
-                // Gestion des erreurs
-                console.error('Registration failed');
+                return response.json().then(data => {
+                    setError(data.error || 'Registration failed'); // Affiche les erreurs détaillées
+                });
             }
+        })
+        .catch(error => {
+            setError('An error occurred: ' + error.message);
         });
     };
 
@@ -69,6 +74,7 @@ const RegisterForm = () => {
                 </div>
                 <button type="submit">Register</button>
             </form>
+            {error && <div className="error">{error}</div>}
             <a href="/login">Back to login</a>
         </div>
     );

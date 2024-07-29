@@ -1,28 +1,38 @@
-// assets/components/Forms/LoginForm.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Effectuer la connexion via fetch ou axios
-        fetch('/login_check', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ _username: email, _password: password })
-        })
-        .then(response => {
+        try {
+            const response = await fetch('/login_check', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    _username: email,
+                    _password: password
+                })
+            });
+
             if (response.ok) {
-                navigate('/'); // Redirection après connexion réussie
+                // Si l'authentification réussit, redirigez l'utilisateur
+                navigate('/');
             } else {
-                // Gestion des erreurs
-                console.error('Login failed');
+                // Affichez une erreur si l'authentification échoue
+                const errorText = await response.text();
+                setError(errorText);
             }
-        });
+        } catch (error) {
+            // Affichez les erreurs de la requête
+            setError('An error occurred: ' + error.message);
+        }
     };
 
     return (
@@ -53,6 +63,7 @@ const LoginForm = () => {
                 </div>
                 <button type="submit">Login</button>
             </form>
+            {error && <div className="error">{error}</div>}
             <div>
                 <a href="/connect-google">Connect with Google</a>
             </div>

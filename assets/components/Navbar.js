@@ -1,8 +1,11 @@
 // assets/components/Navbar.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 const Navbar = () => {
+    const { isAuthenticated, logout } = useAuth();
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <Link className="navbar-brand" to="/">MyShop</Link>
@@ -17,16 +20,20 @@ const Navbar = () => {
                     <li className="nav-item">
                         <Link className="nav-link" to="/cart">Cart</Link>
                     </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/checkout">Checkout</Link>
-                    </li>
-                    {/* Liens pour les pages d'authentification */}
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/login">Login</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/register">Register</Link>
-                    </li>
+                    {isAuthenticated ? (
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/logout">Logout</Link>
+                        </li>
+                    ) : (
+                        <>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/login">Login</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/register">Register</Link>
+                            </li>
+                        </>
+                    )}
                 </ul>
             </div>
         </nav>

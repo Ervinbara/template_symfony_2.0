@@ -15,3 +15,6 @@ connect_google_check:
     path: /connect-google/check
     controller: App\Controller\OAuthController::connectGoogleCheck
 
+login_check:
+    path: /login_check
+    methods: POST
