@@ -12,3 +12,18 @@
     max-height: 500px;
     object-fit: cover;
 }
+
+/* Custom arrows */
+.slick-prev, .slick-next {
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.slick-prev {
+    left: 10px;
+}
+
+.slick-next {
+    right: 10px;
+}

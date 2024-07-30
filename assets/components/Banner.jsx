@@ -1,6 +1,7 @@
 // assets/components/Banner.jsx
 import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
+import '../styles/banner.css';
 
 const Banner = () => {
     const [banners, setBanners] = useState([]);
@@ -25,7 +26,7 @@ const Banner = () => {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        arrows: banners.length > 1
+        arrows: banners.length > 1,
     };
 
     return (

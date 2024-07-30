@@ -1,4 +1,3 @@
-// assets/components/SecondarySlider.jsx
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import '../styles/secondary-slider.css';
@@ -16,11 +15,11 @@ const SecondarySlider = () => {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 2.5, // Affiche deux images complètement et une partiellement
+        slidesToShow: 2.5,
         slidesToScroll: 1,
-        centerMode: true, // Centre la première image
-        centerPadding: '40px', // Ajoute un espacement entre les images
-        arrows: true, // Affiche les flèches de navigation
+        centerMode: true,
+        centerPadding: '40px',
+        arrows: true,
         appendDots: dots => (
             <div
                 style={{
@@ -36,6 +35,16 @@ const SecondarySlider = () => {
         customPaging: i => (
             <button style={{ backgroundColor: '#333', borderRadius: '50%', width: '10px', height: '10px' }} />
         ),
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    centerMode: false,
+                },
+            },
+        ],
     };
 
     return (
