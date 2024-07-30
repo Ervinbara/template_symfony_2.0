@@ -7,6 +7,7 @@ use App\Entity\Product;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\Banner;
+use App\Entity\SecondarySlider; // Assurez-vous d'importer la classe
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -87,6 +88,21 @@ class AppFixtures extends Fixture
             $banner->setSrc($bannerData['src']);
             $banner->setAltText($bannerData['altText']);
             $manager->persist($banner);
+        }
+
+        // Création de 3 sliders secondaires
+        $secondarySliders = [
+            ['src' => '/images/banners/banner-roni.jpg', 'altText' => 'Secondary Slider 1', 'caption' => 'Caption 1'],
+            ['src' => '/images/banners/banner-roni.jpg', 'altText' => 'Secondary Slider 2', 'caption' => 'Caption 2'],
+            ['src' => '/images/banners/banner-roni.jpg', 'altText' => 'Secondary Slider 3', 'caption' => 'Caption 3']
+        ];
+
+        foreach ($secondarySliders as $sliderData) {
+            $slider = new SecondarySlider();
+            $slider->setSrc($sliderData['src']);
+            $slider->setAltText($sliderData['altText']);
+            $slider->setCaption($sliderData['caption']);
+            $manager->persist($slider);
         }
 
         $manager->flush();

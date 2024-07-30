@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Banner;
+use App\Entity\SecondarySlider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,5 +25,21 @@ class BannerController extends AbstractController
         }, $banners);
 
         return $this->json($bannerData);
+    }
+
+    #[Route('/api/secondary-sliders', name: 'api_secondary_sliders', methods: ['GET'])]
+    public function getSecondarySliders(EntityManagerInterface $entityManager): Response
+    {
+        $sliders = $entityManager->getRepository(SecondarySlider::class)->findAll();
+
+        $sliderData = array_map(function ($slider) {
+            return [
+                'src' => $slider->getSrc(),
+                'altText' => $slider->getAltText(),
+                'caption' => $slider->getCaption(),
+            ];
+        }, $sliders);
+
+        return $this->json($sliderData);
     }
 }
