@@ -1,6 +1,6 @@
 // assets/components/Pages/LoginPage.jsx
 import React, { useState } from 'react';
-import '../../styles/AuthPage.css'; // Importation des styles spécifiques
+import '../../styles/Pages/AuthPage.css'; // Importation des styles spécifiques
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');

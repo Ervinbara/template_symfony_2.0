@@ -1,6 +1,6 @@
 // assets/components/Pages/RegisterPage.jsx
 import React, { useState } from 'react';
-import '../../styles/AuthPage.css'; // Importation des styles spécifiques
+import '../../styles/Pages/AuthPage.css'; // Importation des styles spécifiques
 
 const RegisterPage = () => {
     const [email, setEmail] = useState('');

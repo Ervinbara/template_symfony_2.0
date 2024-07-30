@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/ProductCard.css'; // Import des styles pour le composant ProductCard
+import '../../styles/SiteElements/ProductCard.css'; // Import des styles pour le composant ProductCard
 
 // Composant ProductCard pour afficher les détails d'un produit
 const ProductCard = ({ product, addToCart }) => {

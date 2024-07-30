@@ -1,11 +1,11 @@
 // assets/components/Pages/HomePage.jsx
 import React from 'react';
-import Header from '../Header';
-import Banner from '../Banner';
-import SecondarySlider from '../SecondarySlider';
-import '../../styles/banner.css';
-import '../../styles/header.css';
-import '../../styles/secondary-slider.css';
+import Header from '../SiteElements/Header';
+import Banner from '../SiteElements/Banner';
+import SecondarySlider from '../SiteElements/SecondarySlider';
+import '../../styles/SiteElements/banner.css';
+import '../../styles/SiteElements/header.css';
+import '../../styles/SiteElements/secondary-slider.css';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 

@@ -1,7 +1,7 @@
 // assets/components/Banner.jsx
 import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
-import '../styles/banner.css';
+import '../../styles/SiteElements/banner.css';
 
 const Banner = () => {
     const [banners, setBanners] = useState([]);

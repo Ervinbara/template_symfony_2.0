@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
-import '../styles/secondary-slider.css';
+import '../../styles/SiteElements/secondary-slider.css';
 
 const SecondarySlider = () => {
     const [slides, setSlides] = useState([]);

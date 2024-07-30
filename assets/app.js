@@ -7,14 +7,14 @@ import { loadStripe } from '@stripe/stripe-js';
 import ProductList from './components/Product/ProductList';
 import CartPage from './components/Payment/CartPage';
 import Checkout from './components/Payment/Checkout';
-import Navbar from './components/Navbar';
+// import Navbar from './components/Navbar';
 import LoginForm from './components/Forms/LoginForm';
 import HomePage from './components/Pages/HomePage';
 import RegisterForm from './components/Forms/RegisterForm';
-import { AuthProvider } from './components/AuthContext';
+import { AuthProvider } from './components/Security/AuthContext';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import ProtectedRoute from './components/ProtectedRoute'; // Assurez-vous que c'est importé correctement
+import ProtectedRoute from './components/Security/ProtectedRoute'; // Assurez-vous que c'est importé correctement
 
 const stripePromise = loadStripe('pk_test_51PhTvTKuzPUvarsT4RFUKX7BKF1IBavWFROrhpi1zo0jpXafWwSwV4oFYfdWpz8ckvMvH19i2ULzSgmY717bths700WxYSSvQU');
 
