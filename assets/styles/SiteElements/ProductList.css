@@ -16,3 +16,23 @@
     flex-wrap: wrap;
     gap: 1em;
 }
+.filter-container {
+    margin-bottom: 20px;
+}
+
+#category-select {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

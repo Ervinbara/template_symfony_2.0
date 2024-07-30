@@ -1,43 +1,82 @@
 import React, { useEffect, useState } from 'react';
-import ProductCard from './ProductCard'; // Import du composant ProductCard pour afficher les produits
-import '../../styles/SiteElements/ProductList.css'; // Import des styles pour la liste de produits
-import axios from 'axios'; // Import d'axios pour les requêtes HTTP
+import ProductCard from './ProductCard';
+import '../../styles/SiteElements/ProductList.css';
+import axios from 'axios';
 
 const ProductList = () => {
-    // Déclaration d'un état local pour stocker les produits
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('');
 
+    // Fetch categories on component mount
     useEffect(() => {
-        // Fonction pour charger les produits depuis le backend Symfony
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('/api/categories');
+                const data = await response.json();
+                console.log('Fetched categories:', data);
+                setCategories(data['hydra:member']);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+
+        fetchCategories();
+    }, []); 
+
+    // Fetch products on component mount
+    useEffect(() => {
         const fetchProducts = async () => {
             try {
-                // Requête GET pour récupérer la liste des produits
                 const response = await fetch('/api/products');
                 const data = await response.json();
                 console.log('Fetched products:', data);
-                
-                // Mise à jour de l'état local avec les produits récupérés
                 setProducts(data['hydra:member']);
+                setFilteredProducts(data['hydra:member']); // Initial display
             } catch (error) {
-                // Gestion des erreurs de la requête
                 console.error('Error fetching products:', error);
             }
         };
 
         fetchProducts();
-    }, []); // Le tableau vide [] signifie que cet effet s'exécute une seule fois, lors du montage du composant
+    }, []); 
 
-    // Fonction pour ajouter un produit au panier
+    // Filter products based on the selected category
+    const filterProducts = () => {
+        console.log('Selected Category:', selectedCategory);
+        console.log('All Products:', products);
+
+        if (selectedCategory === '') {
+            setFilteredProducts(products); // Show all products if no category selected
+        } else {
+            const filtered = products.filter(product => {
+                console.log('Product Category ID:', product.category.id);
+                return product.category.id.toString() === selectedCategory;
+            });
+            console.log('Filtered products:', filtered);
+            setFilteredProducts(filtered);
+        }
+    };
+
+    // Handle category selection change
+    const handleCategoryChange = (event) => {
+        setSelectedCategory(event.target.value);
+    };
+
+    // Handle search button click
+    const handleSearchClick = () => {
+        filterProducts();
+    };
+
     const addToCart = (productId) => {
         console.log(`Adding product ID: ${productId} to cart`);
-        
-        // Requête POST pour ajouter le produit au panier
+
         axios.post('/api/cart/add', { product_id: productId, quantity: 1 })
             .then(response => {
                 console.log('Product added to cart:', response.data);
             })
             .catch(error => {
-                // Gestion des erreurs de la requête
                 console.error('Error adding to cart:', error);
             });
     };
@@ -45,18 +84,25 @@ const ProductList = () => {
     return (
         <div className="container product-list">
             <h1 className="product-list-title">Liste des Produits</h1>
-            {products.length > 0 ? (
-                // Affichage des produits s'ils existent
+            <div className="filter-container">
+                <label htmlFor="category-select">Filtrer par catégorie:</label>
+                <select id="category-select" value={selectedCategory} onChange={handleCategoryChange}>
+                    <option value="">Toutes les catégories</option>
+                    {categories.map(category => (
+                        <option key={category.id} value={category.id}>{category.name}</option>
+                    ))}
+                </select>
+                <button onClick={handleSearchClick}>Rechercher</button>
+            </div>
+            {filteredProducts.length > 0 ? (
                 <div className="row product-list-grid">
-                    {products.map(product => (
+                    {filteredProducts.map(product => (
                         <div className="col-md-4" key={product.id}>
-                            {/* Utilisation du composant ProductCard pour chaque produit */}
                             <ProductCard product={product} addToCart={addToCart} />
                         </div>
                     ))}
                 </div>
             ) : (
-                // Message affiché s'il n'y a pas de produits
                 <p>Aucun produit trouvé.</p>
             )}
         </div>

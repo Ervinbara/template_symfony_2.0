@@ -15,6 +15,7 @@ import { AuthProvider } from './components/Security/AuthContext';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import ProtectedRoute from './components/Security/ProtectedRoute'; // Assurez-vous que c'est importé correctement
+import Header from './components/SiteElements/Header';
 
 const stripePromise = loadStripe('pk_test_51PhTvTKuzPUvarsT4RFUKX7BKF1IBavWFROrhpi1zo0jpXafWwSwV4oFYfdWpz8ckvMvH19i2ULzSgmY717bths700WxYSSvQU');
 
@@ -24,7 +25,7 @@ root.render(
     <React.StrictMode>
         <AuthProvider>
             <Router>
-                {/* <Navbar /> */}
+            <Header />
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/product" element={<ProductList />} />

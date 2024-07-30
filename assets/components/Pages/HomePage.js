@@ -12,7 +12,6 @@ import "slick-carousel/slick/slick-theme.css";
 const HomePage = () => {
     return (
         <div className="home-page">
-            <Header />
             <Banner />
             <SecondarySlider />
             <div className="container">
