@@ -1,4 +1,3 @@
-// assets/components/Pages/LoginPage.jsx
 import React, { useState } from 'react';
 import '../../styles/Pages/AuthPage.css'; // Importation des styles spécifiques
 
@@ -69,6 +68,14 @@ const LoginPage = () => {
                     {error && <div className="error-message">{error}</div>}
                     <button type="submit" className="submit-button">Login</button>
                 </form>
+
+                {/* Google Login Button */}
+                <div className="google-login">
+                    <a href="/connect-google" className="google-login-button">
+                        Connect with Google
+                    </a>
+                </div>
+
                 <div className="auth-links">
                     <a href="/register">Register</a>
                 </div>

@@ -7,7 +7,8 @@ use App\Entity\Product;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\Banner;
-use App\Entity\SecondarySlider; // Assurez-vous d'importer la classe
+use App\Entity\SecondarySlider;
+use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -35,14 +36,46 @@ class AppFixtures extends Fixture
             $users[] = $user;
         }
 
-        // Création de 10 produits
+        // Création de catégories
+        $categoryNames = [
+            'Vêtements',
+            'Chaussures',
+            'Accessoires',
+        ];
+
+        $categories = [];
+        foreach ($categoryNames as $name) {
+            $category = new Category();
+            $category->setName($name);
+            $category->setDescription("Description for $name");
+            $category->setCreatedAt(new DateTimeImmutable());
+            $category->setUpdatedAt(new DateTimeImmutable());
+            $manager->persist($category);
+            $categories[] = $category;
+        }
+
+        // Création de produits avec des noms distincts et ajout de catégories
+        $productData = [
+            ['name' => 'Tshirt Nike', 'category' => $categories[0]],
+            ['name' => 'Jogging Nike', 'category' => $categories[0]],
+            ['name' => 'Pantalon', 'category' => $categories[0]],
+            ['name' => 'Jupe Rose', 'category' => $categories[0]],
+            ['name' => 'Chaussures Adidas', 'category' => $categories[1]],
+            ['name' => 'Casquette Puma', 'category' => $categories[2]],
+            ['name' => 'Sweatshirt Under Armour', 'category' => $categories[0]],
+            ['name' => 'Short de Sport', 'category' => $categories[0]],
+            ['name' => 'Veste en Jean', 'category' => $categories[0]],
+            ['name' => 'Robe d\'été', 'category' => $categories[0]]
+        ];
+
         $products = [];
-        for ($j = 1; $j <= 10; $j++) {
+        foreach ($productData as $data) {
             $product = new Product();
-            $product->setName("Product $j");
-            $product->setDescription("Description for product $j");
+            $product->setName($data['name']);
+            $product->setDescription("Description for {$data['name']}");
             $product->setPrice(mt_rand(10, 100));
-            $product->setImage("https://via.placeholder.com/150"); // Associer une image depuis un lien internet
+            $product->setImage("https://via.placeholder.com/150");
+            $product->setCategory($data['category']);
             $manager->persist($product);
             $products[] = $product;
         }
@@ -76,7 +109,7 @@ class AppFixtures extends Fixture
             $order->setTotalPrice($totalPrice);
         }
 
-        // Création de 3 bannières
+        // Création de 2 bannières
         $banners = [
             ['type' => 'image', 'src' => '/images/banners/banner-roni.jpg', 'altText' => 'Banner 1'],
             ['type' => 'image', 'src' => '/images/banners/banner-roni.jpg', 'altText' => 'Banner 2']

@@ -4,9 +4,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ProductController extends AbstractController
 {
     private $productRepository;
+    private $categoryRepository;
 
     public function __construct(ProductRepository $productRepository, CategoryRepository $categoryRepository)
     {
@@ -39,7 +40,6 @@ class ProductController extends AbstractController
     public function show($id): Response
     {
         try {
-            // Récupérer un produit spécifique depuis la base de données
             $product = $this->productRepository->find($id);
 
             if (!$product) {
@@ -50,7 +50,6 @@ class ProductController extends AbstractController
                 'product' => $product,
             ]);
         } catch (\Exception $e) {
-            // Log the error or handle it as needed
             return new Response('Error: ' . $e->getMessage());
         }
     }
@@ -64,4 +63,6 @@ class ProductController extends AbstractController
             'hydra:member' => $categories,
         ]);
     }
+
+    
 }

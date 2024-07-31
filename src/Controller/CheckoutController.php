@@ -82,8 +82,9 @@ class CheckoutController extends AbstractController
             }
         }
 
-        Stripe::setApiKey('sk_test_51PhTvTKuzPUvarsTjwFSUwb5ijl1wkEKMSGpuRXYfQ5KMM70PlGbaVVtar3fQBqDtaRWgWfvdBOl0nIhHzT2xtQt00kio3Virt');
-
+        $stripeSecretKey = $this->getParameter('stripe_secret_key');
+        Stripe::setApiKey($stripeSecretKey);
+        
         try {
             $paymentIntent = PaymentIntent::create([
                 'amount' => array_reduce($cart->getCartItems()->toArray(), fn($sum, $item) => $sum + $item->getProduct()->getPrice() * $item->getQuantity(), 0) * 100,
