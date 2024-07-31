@@ -17,7 +17,7 @@ import ProtectedRoute from './components/Security/ProtectedRoute';
 import Header from './components/SiteElements/Header';
 import SearchResults from './components/SiteElements/SearchResults';
 
-const stripePromise = loadStripe('pk_test_51PhTvTKuzPUvarsT4RFUKX7BKF1IBavWFROrhpi1zo0jpXafWwSwV4oFYfdWpz8ckvMvH19i2ULzSgmY717bths700WxYSSvQU');
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
