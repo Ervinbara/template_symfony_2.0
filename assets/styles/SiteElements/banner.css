@@ -9,7 +9,7 @@
 .banner-item img,
 .banner-item video {
     width: 100%;
-    max-height: 500px;
+    max-height: 650px;
     object-fit: cover;
 }
 

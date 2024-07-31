@@ -1,70 +1,168 @@
 /* assets/styles/header.css */
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+
 .header {
     width: 100%;
 }
 
-.promo-banner {
-    background-color: #f8d7da;
-    text-align: center;
-    padding: 10px 0;
+/* First Band */
+.top-bar {
+    background-color: #f0f0f0;
+    padding: 10px 40px; /* Adjust padding for better spacing */
+    font-size: 14px;
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
 }
 
-.top-bar {
+.top-links {
     display: flex;
-    justify-content: space-between;
+    gap: 15px;
+}
+
+.top-links a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.top-links a:hover {
+    color: #000;
+}
+
+/* Second Band */
+.main-nav {
+    display: flex;
+    justify-content: center; /* Center the nav container */
     align-items: center;
-    padding: 10px 20px;
     background-color: #fff;
+    padding: 10px 20px;
     border-bottom: 1px solid #ddd;
+    position: relative;
+}
+
+.logo {
+    position: absolute;
+    left: 20px; /* Adjust as needed */
 }
 
 .logo img {
     height: 50px;
 }
 
-.util-links a {
-    margin-left: 15px;
-    color: #000;
-    text-decoration: none;
-}
-
-.navbar {
+.nav-container {
+    flex: 1; /* Take up remaining space */
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fff;
-    padding: 10px 20px;
+    justify-content: center; /* Center nav links */
 }
 
-.navbar ul {
+.nav-links {
     list-style-type: none;
     display: flex;
     margin: 0;
     padding: 0;
+    gap: 20px;
 }
 
-.navbar li {
-    margin-right: 20px;
+.nav-links li {
+    margin: 0; /* Remove additional margin */
 }
 
-.navbar a {
+.nav-links a {
     color: #000;
     text-decoration: none;
+    font-weight: bold;
+}
+
+/* Search Container */
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: absolute;
+    right: 20px; /* Adjust as needed */
 }
 
 .search-bar {
     display: flex;
     align-items: center;
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    background-color: #fff;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar:hover {
+    background-color: #f0f0f0;
+}
+
+.search-icon {
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #000;
 }
 
 .search-bar input {
+    border: none;
     padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
+    width: 200px; /* Fixed width */
+    outline: none;
+    background: transparent;
 }
 
-.search-bar button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
+.icon-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.icon-container .icon {
+    font-size: 18px;
+    color: #000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.icon-container .icon:hover {
+    color: #555;
+}
+
+/* Third Band */
+.promo-banner {
+    background-color: #e0e0e0; /* Gris clair */
+    color: #333; /* Couleur du texte */
+    text-align: center;
+    padding: 20px 0; /* Augmenter le padding pour plus de hauteur */
+    font-size: 18px; /* Ajuster la taille du texte si nécessaire */
+    font-weight: bold;
+    position: relative;
+    overflow: hidden; /* Assure que les messages ne débordent pas */
+}
+
+.message-container {
+    display: flex;
+    flex-direction: column; /* Aligne les messages en colonne */
+    align-items: center; /* Centre les messages horizontalement */
+    justify-content: center; /* Centre les messages verticalement */
+    height: 100%; /* Prend toute la hauteur disponible */
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.message {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    font-size: 1.2em; /* Ajuster la taille du texte si nécessaire */
+}
+
+.message.active {
+    opacity: 1;
 }
