@@ -1,8 +1,18 @@
-// assets/components/Header.jsx
-import React from 'react';
-import { Link } from 'react-router-dom';
+// assets/components/SiteElements/Header.jsx
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
+    const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
+
+    const handleSearchSubmit = (event) => {
+        event.preventDefault();
+        if (searchQuery.trim()) {
+            navigate(`/search?query=${searchQuery}`);
+        }
+    };
+
     return (
         <header className="header">
             <div className="promo-banner">
@@ -29,8 +39,15 @@ const Header = () => {
                     <li><Link to="/offers">Offres</Link></li>
                 </ul>
                 <div className="search-bar">
-                    <input type="text" placeholder="Rechercher..." />
-                    <button type="submit"><i className="fa fa-search"></i></button>
+                    <form onSubmit={handleSearchSubmit}>
+                        <input 
+                            type="text" 
+                            placeholder="Rechercher..." 
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)} 
+                        />
+                        <button type="submit"><i className="fa fa-search"></i></button>
+                    </form>
                 </div>
             </nav>
         </header>
