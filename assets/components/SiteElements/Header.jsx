@@ -1,7 +1,7 @@
-// assets/components/SiteElements/Header.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+// import '../../styles/SiteElements/Header.css';
 
 const messages = [
     "Free Shipping on Orders Over $50!",
@@ -16,6 +16,7 @@ const Header = () => {
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
     const [hovered, setHovered] = useState(false);
+    const [navOpen, setNavOpen] = useState(false); // State for the sidebar
     const messageTimeoutRef = useRef(null);
     const navigate = useNavigate();
 
@@ -41,12 +42,12 @@ const Header = () => {
         };
 
         if (!hovered) {
-            messageTimeoutRef.current = setInterval(rotateMessages, 3000); // Change message every 3 seconds
+            messageTimeoutRef.current = setInterval(rotateMessages, 3000);
         } else {
-            clearInterval(messageTimeoutRef.current); // Pause rotation on hover
+            clearInterval(messageTimeoutRef.current);
         }
 
-        return () => clearInterval(messageTimeoutRef.current); // Cleanup on unmount or hover change
+        return () => clearInterval(messageTimeoutRef.current);
     }, [hovered]);
 
     const handleSearchSubmit = (event) => {
@@ -56,9 +57,17 @@ const Header = () => {
         }
     };
 
+    const toggleNav = () => {
+        setNavOpen(!navOpen);
+    };
+
+    const closeNav = () => {
+        setNavOpen(false);
+    };
+
     return (
         <header className="header">
-            {/* First Band */}
+            {/* Top Band */}
             <div className="top-bar">
                 <div className="top-links">
                     <Link to="/store-locator">Trouver un magasin</Link>
@@ -68,13 +77,18 @@ const Header = () => {
                 </div>
             </div>
 
-            {/* Second Band */}
+            {/* Main Navigation */}
             <div className="main-nav">
                 <div className="logo">
                     <Link to="/">
                         <img src="/path/to/logo.png" alt="Logo" />
                     </Link>
                 </div>
+
+                <div className="hamburger-menu" onClick={toggleNav}>
+                    <i className="fa fa-bars"></i>
+                </div>
+
                 <ul className="nav-links">
                     <li><Link to="/new-arrivals">Nouveautés du moment</Link></li>
                     <li><Link to="/men">Homme</Link></li>
@@ -82,6 +96,7 @@ const Header = () => {
                     <li><Link to="/kids">Enfant</Link></li>
                     <li><Link to="/offers">Offres</Link></li>
                 </ul>
+
                 <div className="search-container">
                     <div className="search-bar">
                         <button className="search-icon" onClick={() => setIsSearchOpen(!isSearchOpen)}>
@@ -119,7 +134,7 @@ const Header = () => {
                 </div>
             </div>
 
-            {/* Third Band */}
+            {/* Promo Banner */}
             <div className="promo-banner" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
                 <div className="message-container">
                     {messages.map((message, index) => (
@@ -132,6 +147,26 @@ const Header = () => {
                     ))}
                 </div>
             </div>
+
+            {/* Sidebar */}
+            <div className={`sidebar ${navOpen ? 'open' : ''}`}>
+                <button className="close-btn" onClick={closeNav}>&times;</button>
+                <ul>
+                    <li><Link to="/new-arrivals">Nouveautés du moment</Link></li>
+                    <li><Link to="/men">Homme</Link></li>
+                    <li><Link to="/women">Femme</Link></li>
+                    <li><Link to="/kids">Enfant</Link></li>
+                    <li><Link to="/offers">Offres</Link></li>
+                    <hr />
+                    <li><Link to="/store-locator">Trouver un magasin</Link></li>
+                    <li><Link to="/help">Aide</Link></li>
+                    <li><Link to="/join">Rejoins-nous</Link></li>
+                    <li><Link to="/login">S'identifier</Link></li>
+                </ul>
+            </div>
+
+            {/* Overlay */}
+            {navOpen && <div className="overlay" onClick={closeNav}></div>}
         </header>
     );
 };
