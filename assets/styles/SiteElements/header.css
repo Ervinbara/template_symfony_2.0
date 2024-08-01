@@ -18,14 +18,14 @@ body, html {
 .top-bar {
     display: flex;
     justify-content: flex-end;
-    padding: 10px 20px;
-    background-color: #f8f8f8;
+    padding: 6px 68px;
+    background-color: #f5f5f5;
 }
 
 .top-links a {
     margin-left: 20px;
     text-decoration: none;
-    color: #333;
+    color: #111111;
     font-size: 14px;
 }
 
@@ -33,7 +33,7 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px 20px;
+    padding: 20px 20px;
     position: relative;
 }
 
@@ -67,7 +67,7 @@ body, html {
 
 .nav-links a {
     text-decoration: none;
-    color: #333;
+    color: #111111;
     font-size: 16px;
     font-weight: 500;
 }
@@ -84,15 +84,22 @@ body, html {
 }
 
 .search-bar input {
-    padding: 8px 40px 8px 10px;
+    padding: 8px 10px 8px 40px; /* Adjusted padding for the search icon */
     border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 200px;
+    border-radius: 25px;
+    width: 155px;
+    cursor: pointer;
 }
+
+/* Styles pour l'input au survol */
+.search-bar input:hover {
+    background-color: #c1c1c1;
+}
+
 
 .search-bar .search-icon {
     position: absolute;
-    right: 10px;
+    left: -7px; /* Icon position adjusted to be on the left */
     top: 50%;
     transform: translateY(-50%);
     background: none;
@@ -103,14 +110,19 @@ body, html {
 }
 
 .suggestions-box {
-    position: absolute;
     top: 40px;
     left: 0;
     width: 100%;
     background: #fff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 100;
     border-radius: 4px;
+}
+
+.suggestions-box p {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    color: #a5a5a5;
 }
 
 .suggestion-item {
@@ -132,8 +144,8 @@ body, html {
 }
 
 .promo-banner {
-    background-color: #f1c40f;
-    padding: 10px 20px;
+    background-color: #f5f5f5;
+    padding: 20px 20px;
     text-align: center;
     font-size: 14px;
     color: #333;
@@ -235,11 +247,89 @@ body, html {
     cursor: pointer;
 }
 
+/* Sidebar for Search */
+.search-sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Hidden by default */
+    width: 100%;
+    height: 45%; /* 45% of the viewport height */
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    z-index: 300;
+    transition: right 0.3s ease;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content to the top */
+    align-items: flex-end; /* Align content to the right */
+    padding-right: 20px;
+}
+
+.search-sidebar.open {
+    right: 0;
+}
+
+.search-sidebar .cancel-btn {
+    font-size: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    align-self: flex-start;
+    margin: 10px;
+    position: absolute;
+    top: 28px;
+    right: 20px; /* Adjusted to be at the top right */
+}
+
+.search-sidebar .search-content {
+    width: 100%;
+    padding: 20px;
+}
+
+.search-sidebar .search-content form {
+    width: 65%;
+}
+
+.search-sidebar .search-content input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    margin-bottom: 10px;
+}
+
+.search-sidebar .search-content input:hover {
+    background-color: #f5f5f5;
+}
+
+.search-sidebar .popular-searches {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.search-sidebar .popular-searches ul {
+    padding-left: 20px;
+}
+
+.search-sidebar .popular-searches ul li {
+    list-style-type: disc;
+    margin-bottom: 8px;
+}
+
 /* Responsive Design */
 /* Tablet Devices */
 @media (max-width: 1024px) {
     .main-nav {
-        justify-content: space-between;
+        justify-content: flex-end;
+        padding: 16px 45px;
+    }
+
+    .search-bar .search-icon {
+        left: -45px;
     }
 
     .hamburger-menu {
@@ -249,16 +339,76 @@ body, html {
     .nav-links {
         display: none;
     }
+
+    .top-bar {
+        display: none;
+    }
+
+    .icon-container {
+        display: flex;
+        align-items: center; /* Center icons vertically */
+    }
+
+    .search-container {
+        position: relative;
+        right: 20px; /* Adjust to center the icons properly */
+    }
+
+    .search-bar input {
+        display: none; /* Hide the input on tablet/mobile */
+    }
+
+    .search-bar .search-icon {
+        font-size: 24px; /* Larger search icon on mobile/tablet */
+    }
+
+    /* Align icons to the right in the specified order */
+    .icon-container .search-icon {
+        order: 1;
+    }
+
+    .icon-container .profile-icon {
+        order: 2;
+    }
+
+    .icon-container .cart-icon {
+        order: 3;
+    }
+
+    .icon-container .hamburger-menu {
+        order: 4;
+    }
 }
 
 /* Mobile Devices */
 @media (max-width: 767px) {
     .main-nav {
-        justify-content: space-between;
-        padding: 10px 20px;
+        justify-content: flex-end;
+        padding: 16px 45px;
     }
 
     .nav-links {
         display: none;
     }
+
+    .search-bar .search-icon {
+        left: -45px;
+    }
+
+    /* Same icon order for mobile as for tablets */
+    /* .icon-container .search-icon {
+        order: 1;
+    }
+
+    .icon-container .profile-icon {
+        order: 2;
+    }
+
+    .icon-container .cart-icon {
+        order: 3;
+    }
+
+    .icon-container .hamburger-menu {
+        order: 4;
+    } */
 }

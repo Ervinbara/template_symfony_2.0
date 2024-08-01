@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-// import '../../styles/SiteElements/Header.css';
 
 const messages = [
     "Free Shipping on Orders Over $50!",
@@ -10,13 +9,21 @@ const messages = [
     "Limited Time Offer: Extra 10% Off Sale Items!"
 ];
 
+const fakeSuggestion = [
+    "Air Force 1",
+    "Jordan",
+    "Air Max",
+    "Blazer"
+];
+
 const Header = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
     const [hovered, setHovered] = useState(false);
-    const [navOpen, setNavOpen] = useState(false); // State for the sidebar
+    const [navOpen, setNavOpen] = useState(false);
+    const [searchSidebarOpen, setSearchSidebarOpen] = useState(false);
     const messageTimeoutRef = useRef(null);
     const navigate = useNavigate();
 
@@ -24,8 +31,9 @@ const Header = () => {
         if (searchQuery) {
             const fetchSuggestions = async () => {
                 try {
-                    const response = await axios.get(`/api/search-suggestions?query=${searchQuery}`);
-                    setSuggestions(response.data);
+                    // Simuler une requête réseau avec les fausses suggestions
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    setSuggestions(fakeSuggestion);
                 } catch (error) {
                     console.error('Error fetching search suggestions:', error);
                 }
@@ -65,9 +73,17 @@ const Header = () => {
         setNavOpen(false);
     };
 
+    const toggleSearchSidebar = () => {
+        setSearchSidebarOpen(!searchSidebarOpen);
+    };
+
+    const closeSearchSidebar = () => {
+        setSearchSidebarOpen(false);
+    };
+
     return (
         <header className="header">
-            {/* Top Band */}
+            {/* Top Band - Only visible on desktop */}
             <div className="top-bar">
                 <div className="top-links">
                     <Link to="/store-locator">Trouver un magasin</Link>
@@ -99,7 +115,7 @@ const Header = () => {
 
                 <div className="search-container">
                     <div className="search-bar">
-                        <button className="search-icon" onClick={() => setIsSearchOpen(!isSearchOpen)}>
+                        <button className="search-icon" onClick={toggleSearchSidebar}>
                             <i className="fa fa-search"></i>
                         </button>
                         <form onSubmit={handleSearchSubmit}>
@@ -109,18 +125,9 @@ const Header = () => {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)} 
                                 onFocus={() => setIsSearchOpen(true)}
+                                onClick={toggleSearchSidebar}
                                 onBlur={() => setTimeout(() => setIsSearchOpen(false), 200)}
                             />
-                            {isSearchOpen && suggestions.length > 0 && (
-                                <div className="suggestions-box">
-                                    {suggestions.map((suggestion, index) => (
-                                        <div key={index} className="suggestion-item">
-                                            <img src={suggestion.image} alt={suggestion.name} />
-                                            <span>{suggestion.name}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
                         </form>
                     </div>
                     <div className="icon-container">
@@ -165,8 +172,33 @@ const Header = () => {
                 </ul>
             </div>
 
+            {/* Search Sidebar */}
+            <div className={`search-sidebar ${searchSidebarOpen ? 'open' : ''}`}>
+                <button className="cancel-btn" onClick={closeSearchSidebar}>Annuler</button>
+                <div className="search-content">
+                    <form onSubmit={handleSearchSubmit}>
+                        <input 
+                            type="text" 
+                            placeholder="Rechercher..." 
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)} 
+                        />
+                        {fakeSuggestion.length > 0 && (
+                            <div className="suggestions-box">
+                                <p>Recherches populaires</p>
+                                {fakeSuggestion.map((suggestion, index) => (
+                                    <div key={index} className="suggestion-item">
+                                        <span>{suggestion}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </form>
+                </div>
+            </div>
+
             {/* Overlay */}
-            {navOpen && <div className="overlay" onClick={closeNav}></div>}
+            {(navOpen || searchSidebarOpen) && <div className="overlay" onClick={() => { closeNav(); closeSearchSidebar(); }}></div>}
         </header>
     );
 };
