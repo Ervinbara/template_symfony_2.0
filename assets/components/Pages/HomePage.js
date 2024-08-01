@@ -13,6 +13,10 @@ const HomePage = () => {
     return (
         <div className="home-page">
             <Banner />
+            <div>
+                <h2 className="slider-title">EN GARDE POUR GAGNER</h2>
+            <p className="slider-subtitle">Phrase descriptive centrée sous le titre.</p>
+            </div>
             <SecondarySlider />
             <div className="container">
                 <h1>Welcome to the Home Page!</h1>

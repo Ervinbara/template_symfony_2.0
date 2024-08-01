@@ -49,8 +49,6 @@ const SecondarySlider = () => {
 
     return (
         <div className="secondary-slider-container">
-            <h2 className="slider-title">EN GARDE POUR GAGNER</h2>
-            <p className="slider-subtitle">Phrase descriptive centrée sous le titre.</p>
             <div className="secondary-slider">
                 <Slider {...settings}>
                     {slides.map((slide, index) => (

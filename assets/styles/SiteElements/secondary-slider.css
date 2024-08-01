@@ -76,24 +76,39 @@
     justify-content: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: absolute;
-    top: -20px; /* Positionne les flèches légèrement au-dessus du slider */
+    top: 10px; /* Aligné en haut */
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
 }
 
 .secondary-slider-container .slick-prev {
-    left: auto !important;
-    right: 60px !important; /* Ajuste selon vos besoins */
+    right: 60px; /* Positionnement à droite */
 }
 
 .secondary-slider-container .slick-next {
-    right: 10px !important; /* Ajuste selon vos besoins */
+    right: 10px; /* Positionnement à droite, côte à côte */
+}
+
+.secondary-slider-container .slick-prev:hover, 
+.secondary-slider-container .slick-next:hover {
+    transform: scale(1.1); /* Effet de survol léger */
 }
 
 .slick-prev:before, .slick-next:before {
-    font-family: 'slick';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
     font-size: 20px;
     line-height: 1;
     opacity: .75;
     color: black;
+}
+
+.slick-prev:before {
+    content: "\f053"; /* Code Font Awesome pour le chevron gauche */
+}
+
+.slick-next:before {
+    content: "\f054"; /* Code Font Awesome pour le chevron droit */
 }
 
 /* Custom dots */
