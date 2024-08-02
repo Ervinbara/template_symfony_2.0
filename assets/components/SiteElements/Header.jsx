@@ -50,7 +50,7 @@ const Header = () => {
         };
 
         if (!hovered) {
-            messageTimeoutRef.current = setInterval(rotateMessages, 3000);
+            messageTimeoutRef.current = setInterval(rotateMessages, 1000);
         } else {
             clearInterval(messageTimeoutRef.current);
         }

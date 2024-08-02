@@ -1,0 +1,107 @@
+.third-slider-container {
+    position: relative;
+    width: 100%;
+    background-color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.third-slider {
+    position: relative;
+    width: 100%;
+}
+
+.slider-item {
+    position: relative;
+    margin: 0 10px; /* Espacement entre les images */
+}
+
+.slider-image {
+    /* width: 100%;        Adapte l'image à la largeur de son conteneur */
+    height: 100%;       /* Adapte l'image à la hauteur de son conteneur */
+    object-fit: contain; /* Assure que l'image est entièrement visible sans déformation */
+}
+
+.slider-text {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Custom arrows */
+.third-slider-container .slick-prev, 
+.third-slider-container .slick-next {
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.third-slider-container .slick-prev {
+    right: 60px; /* Positionnement à droite avec un léger espacement */
+}
+
+.third-slider-container .slick-next {
+    right: 10px; /* Positionnement à droite, côte à côte */
+}
+
+.third-slider-container .slick-prev:hover, 
+.third-slider-container .slick-next:hover {
+    background-color: #c6c6c6;
+}
+
+.slick-prev:before, .slick-next:before {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 1;
+    opacity: .75;
+    color: black;
+}
+
+.slick-prev:before {
+    content: "\f053"; /* Code Font Awesome pour le chevron gauche */
+}
+
+.slick-next:before {
+    content: "\f054"; /* Code Font Awesome pour le chevron droit */
+}
+
+/* Custom dots */
+.slick-dots {
+    bottom: 10px;
+}
+
+.slick-dots li button:before {
+    color: #333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .slider-image {
+        /* width: 100%; */
+        height: auto; /* Ajuste la hauteur de l'image pour qu'elle s'adapte au conteneur */
+    }
+
+    .slider-item {
+        margin: 0 5px; /* Réduit l'espacement entre les images sur mobile */
+    }
+
+    .third-slider-container .slick-prev {
+        right: 40px; /* Réduit l'espacement pour les flèches sur mobile */
+    }
+
+    .third-slider-container .slick-next {
+        right: 5px; /* Réduit l'espacement pour les flèches sur mobile */
+    }
+}

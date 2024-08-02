@@ -1,4 +1,3 @@
-// assets/components/Banner.jsx
 import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import '../../styles/SiteElements/banner.css';
@@ -21,8 +20,8 @@ const Banner = () => {
     }, []);
 
     const settings = {
-        dots: true,
-        infinite: true,
+        dots: banners.length > 1,
+        infinite: banners.length > 1,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,

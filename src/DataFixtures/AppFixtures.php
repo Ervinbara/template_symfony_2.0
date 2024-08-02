@@ -8,6 +8,8 @@ use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\Banner;
 use App\Entity\SecondarySlider;
+use App\Entity\ThirdSlider;
+use App\Entity\FourthSlider;
 use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -112,7 +114,7 @@ class AppFixtures extends Fixture
         // Création de 2 bannières
         $banners = [
             ['type' => 'image', 'src' => '/images/banners/banner-roni.jpg', 'altText' => 'Banner 1'],
-            ['type' => 'image', 'src' => '/images/banners/banner-roni.jpg', 'altText' => 'Banner 2']
+            // ['type' => 'image', 'src' => '/images/banners/roni.jpg', 'altText' => 'Banner 2'],
         ];
 
         foreach ($banners as $bannerData) {
@@ -125,13 +127,54 @@ class AppFixtures extends Fixture
 
         // Création de 3 sliders secondaires
         $secondarySliders = [
-            ['src' => '/images/banners/banner-roni.jpg', 'altText' => 'Secondary Slider 1', 'caption' => 'Caption 1'],
-            ['src' => '/images/banners/banner-roni.jpg', 'altText' => 'Secondary Slider 2', 'caption' => 'Caption 2'],
-            ['src' => '/images/banners/banner-roni.jpg', 'altText' => 'Secondary Slider 3', 'caption' => 'Caption 3']
+            ['src' => '/images/secondary-slider/nike-child.jpg', 'altText' => 'Secondary Slider 1', 'caption' => 'Caption 1'],
+            ['src' => '/images/secondary-slider/nike-shoes.png', 'altText' => 'Secondary Slider 2', 'caption' => 'Caption 2'],
+            ['src' => '/images/secondary-slider/red-girl.jpg', 'altText' => 'Secondary Slider 3', 'caption' => 'Caption 3'],
+            ['src' => '/images/secondary-slider/three-gyal.jpg', 'altText' => 'Secondary Slider 4', 'caption' => 'Caption 4'],
+            ['src' => '/images/secondary-slider/victor.png', 'altText' => 'Secondary Slider 5', 'caption' => 'Caption 5'],
+            ['src' => '/images/secondary-slider/nike-girls.jpg', 'altText' => 'Secondary Slider 6', 'caption' => 'Caption 6'],
         ];
 
         foreach ($secondarySliders as $sliderData) {
             $slider = new SecondarySlider();
+            $slider->setSrc($sliderData['src']);
+            $slider->setAltText($sliderData['altText']);
+            $slider->setCaption($sliderData['caption']);
+            $manager->persist($slider);
+        }
+
+        $thirdSliders = [
+            ['src' => '/images/third-slider/1.jpg', 'altText' => 'Third Slider 1', 'caption' => 'Caption 1'],
+            ['src' => '/images/third-slider/2.jpg', 'altText' => 'Third Slider 2', 'caption' => 'Caption 3'],
+            ['src' => '/images/third-slider/3.jpg', 'altText' => 'Third Slider 3', 'caption' => 'Caption 3'],
+            ['src' => '/images/third-slider/4.jpg', 'altText' => 'Third Slider 4', 'caption' => 'Caption 4'],
+            ['src' => '/images/third-slider/5.jpg', 'altText' => 'Third Slider 5', 'caption' => 'Caption 5'],
+            ['src' => '/images/third-slider/6.jpg', 'altText' => 'Third Slider 6', 'caption' => 'Caption 6'],
+            ['src' => '/images/third-slider/7.jpg', 'altText' => 'Third Slider 7', 'caption' => 'Caption 7'],
+            ['src' => '/images/third-slider/8.jpg', 'altText' => 'Third Slider 8', 'caption' => 'Caption 8'],
+        ];
+
+        foreach ($thirdSliders as $sliderData) {
+            $slider = new ThirdSlider();
+            $slider->setSrc($sliderData['src']);
+            $slider->setAltText($sliderData['altText']);
+            $slider->setCaption($sliderData['caption']);
+            $manager->persist($slider);
+        }
+
+        $fourthSliders = [
+            ['src' => '/images/fourth-slider/1.jpg', 'altText' => 'fourth Slider 1', 'caption' => 'Caption 1'],
+            ['src' => '/images/fourth-slider/2.jpg', 'altText' => 'fourth Slider 2', 'caption' => 'Caption 3'],
+            ['src' => '/images/fourth-slider/3.jpg', 'altText' => 'fourth Slider 3', 'caption' => 'Caption 3'],
+            ['src' => '/images/fourth-slider/4.jpg', 'altText' => 'fourth Slider 4', 'caption' => 'Caption 4'],
+            ['src' => '/images/fourth-slider/5.jpg', 'altText' => 'fourth Slider 5', 'caption' => 'Caption 5'],
+            ['src' => '/images/fourth-slider/6.jpg', 'altText' => 'fourth Slider 6', 'caption' => 'Caption 6'],
+            ['src' => '/images/fourth-slider/7.jpg', 'altText' => 'fourth Slider 7', 'caption' => 'Caption 7'],
+            ['src' => '/images/fourth-slider/8.jpg', 'altText' => 'fourth Slider 8', 'caption' => 'Caption 8'],
+        ];
+
+        foreach ($fourthSliders as $sliderData) {
+            $slider = new FourthSlider();
             $slider->setSrc($sliderData['src']);
             $slider->setAltText($sliderData['altText']);
             $slider->setCaption($sliderData['caption']);

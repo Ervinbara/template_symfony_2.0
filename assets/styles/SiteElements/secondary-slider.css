@@ -76,13 +76,12 @@
     justify-content: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: absolute;
-    top: 10px; /* Aligné en haut */
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
 }
 
 .secondary-slider-container .slick-prev {
-    right: 60px; /* Positionnement à droite */
+    right: 60px!important; /* Positionnement à droite avec un léger espacement */
 }
 
 .secondary-slider-container .slick-next {
@@ -91,7 +90,7 @@
 
 .secondary-slider-container .slick-prev:hover, 
 .secondary-slider-container .slick-next:hover {
-    transform: scale(1.1); /* Effet de survol léger */
+    background-color : #c6c6c6;
 }
 
 .slick-prev:before, .slick-next:before {

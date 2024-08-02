@@ -1,9 +1,15 @@
-/* assets/styles/banner.css */
 .banner-container {
     position: relative;
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
+}
+
+.banner-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .banner-item img,
@@ -14,10 +20,23 @@
 }
 
 /* Custom arrows */
-.slick-prev, .slick-next {
+.slick-prev,
+.slick-next {
     z-index: 1;
     top: 50%;
     transform: translateY(-50%);
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
 }
 
 .slick-prev {
