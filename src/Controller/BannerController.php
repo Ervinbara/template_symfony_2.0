@@ -8,6 +8,7 @@ use App\Entity\SecondarySlider;
 use App\Entity\ThirdSlider;
 use App\Entity\FourthSlider;
 use App\Entity\FifthSlider;
+use App\Entity\SixthSlider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -95,19 +96,35 @@ class BannerController extends AbstractController
         return $this->json($sliderData);
     }
 
-    // #[Route('/api/fifth-sliders', name: 'api_fifth_sliders', methods: ['GET'])]
-    // public function getThirdSliders(EntityManagerInterface $entityManager): Response
-    // {
-    //     $sliders = $entityManager->getRepository(FifthSlider::class)->findAll();
+    #[Route('/api/fifth-sliders', name: 'api_fifth_sliders', methods: ['GET'])]
+    public function getFifthSliders(EntityManagerInterface $entityManager): Response
+    {
+        $sliders = $entityManager->getRepository(FifthSlider::class)->findAll();
 
-    //     $sliderData = array_map(function ($slider) {
-    //         return [
-    //             'src' => $slider->getSrc(),
-    //             'altText' => $slider->getAltText(),
-    //             'caption' => $slider->getCaption(),
-    //         ];
-    //     }, $sliders);
+        $sliderData = array_map(function ($slider) {
+            return [
+                'src' => $slider->getSrc(),
+                'altText' => $slider->getAltText(),
+                'caption' => $slider->getCaption(),
+            ];
+        }, $sliders);
 
-    //     return $this->json($sliderData);
-    // }
+        return $this->json($sliderData);
+    }
+
+    #[Route('/api/sixth-sliders', name: 'api_sixth_sliders', methods: ['GET'])]
+    public function getSixthSliders(EntityManagerInterface $entityManager): Response
+    {
+        $sliders = $entityManager->getRepository(SixthSlider::class)->findAll();
+
+        $sliderData = array_map(function ($slider) {
+            return [
+                'src' => $slider->getSrc(),
+                'altText' => $slider->getAltText(),
+                'caption' => $slider->getCaption(),
+            ];
+        }, $sliders);
+
+        return $this->json($sliderData);
+    }
 }

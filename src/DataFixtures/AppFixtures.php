@@ -3,18 +3,20 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
-use App\Entity\Product;
 use App\Entity\Order;
-use App\Entity\OrderItem;
 use App\Entity\Banner;
-use App\Entity\SecondarySlider;
+use DateTimeImmutable;
+use App\Entity\Product;
+use App\Entity\Category;
+use App\Entity\OrderItem;
+use App\Entity\FifthSlider;
+use App\Entity\SixthSlider;
 use App\Entity\ThirdSlider;
 use App\Entity\FourthSlider;
-use App\Entity\Category;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\Entity\SecondarySlider;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use DateTimeImmutable;
 
 class AppFixtures extends Fixture
 {
@@ -45,6 +47,18 @@ class AppFixtures extends Fixture
             'Accessoires',
         ];
 
+        $productImages = [
+            ['src' => '/images/sixth-slider/1.png', 'altText' => 'sixth Slider 1', 'caption' => 'Caption 1'],
+            ['src' => '/images/sixth-slider/2.png', 'altText' => 'sixth Slider 2', 'caption' => 'Caption 3'],
+            ['src' => '/images/sixth-slider/3.png', 'altText' => 'sixth Slider 3', 'caption' => 'Caption 3'],
+            ['src' => '/images/sixth-slider/4.png', 'altText' => 'sixth Slider 4', 'caption' => 'Caption 4'],
+            ['src' => '/images/sixth-slider/5.png', 'altText' => 'sixth Slider 5', 'caption' => 'Caption 5'],
+            ['src' => '/images/sixth-slider/6.png', 'altText' => 'sixth Slider 6', 'caption' => 'Caption 6'],
+            ['src' => '/images/sixth-slider/7.png', 'altText' => 'sixth Slider 7', 'caption' => 'Caption 7'],
+            ['src' => '/images/sixth-slider/8.png', 'altText' => 'sixth Slider 8', 'caption' => 'Caption 8'],
+
+        ];
+
         $categories = [];
         foreach ($categoryNames as $name) {
             $category = new Category();
@@ -70,14 +84,22 @@ class AppFixtures extends Fixture
             ['name' => 'Robe d\'été', 'category' => $categories[0]]
         ];
 
+        // Boucle pour créer des produits
         $products = [];
-        foreach ($productData as $data) {
+        foreach ($productData as $index => $data) {
             $product = new Product();
             $product->setName($data['name']);
             $product->setDescription("Description for {$data['name']}");
             $product->setPrice(mt_rand(10, 100));
-            $product->setImage("https://via.placeholder.com/150");
             $product->setCategory($data['category']);
+
+            // Assigner une image à chaque produit
+            if (isset($productImages[$index])) {
+                $product->setImage($productImages[$index]['src']);
+            } else {
+                $product->setImage("https://via.placeholder.com/150"); // Image par défaut si pas d'image
+            }
+
             $manager->persist($product);
             $products[] = $product;
         }
@@ -175,6 +197,21 @@ class AppFixtures extends Fixture
 
         foreach ($fourthSliders as $sliderData) {
             $slider = new FourthSlider();
+            $slider->setSrc($sliderData['src']);
+            $slider->setAltText($sliderData['altText']);
+            $slider->setCaption($sliderData['caption']);
+            $manager->persist($slider);
+        }
+
+        $fifthSliders = [
+            ['src' => '/images/fifth-slider/1.jpg', 'altText' => 'fifth Slider 1', 'caption' => 'Caption 1'],
+            ['src' => '/images/fifth-slider/2.jpg', 'altText' => 'fifth Slider 2', 'caption' => 'Caption 3'],
+            ['src' => '/images/fifth-slider/3.jpg', 'altText' => 'fifth Slider 3', 'caption' => 'Caption 3'],
+            ['src' => '/images/fifth-slider/4.jpg', 'altText' => 'fifth Slider 4', 'caption' => 'Caption 4'],
+        ];
+
+        foreach ($fifthSliders as $sliderData) {
+            $slider = new FifthSlider();
             $slider->setSrc($sliderData['src']);
             $slider->setAltText($sliderData['altText']);
             $slider->setCaption($sliderData['caption']);

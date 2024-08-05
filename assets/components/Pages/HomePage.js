@@ -11,6 +11,8 @@ import '../../styles/SiteElements/header.css';
 import '../../styles/Pages/HomePage.css';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+import FifthSlider from '../SiteElements/FifthSlider';
+import SixthSlider from '../SiteElements/SixthSlider';
 
 const HomePage = () => {
     return (
@@ -26,6 +28,10 @@ const HomePage = () => {
             <ThirdSlider />
             <p>Tout pour ton sport</p>
             <FourthSlider />
+            <p>Nouveautés de la semaine</p>
+            <SixthSlider />
+            <p>Plus d'articles</p>
+            <FifthSlider />
         </div>
     );
 };

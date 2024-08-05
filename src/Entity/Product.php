@@ -15,6 +15,7 @@ use Vich\UploaderBundle\Entity\File;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ProductRepository;
 use ApiPlatform\Metadata\GetCollection;
+use App\Controller\ProductLatestController;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -29,7 +30,14 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
         new GetCollection(),
         new Post(),
         new Put(),
-        new Delete()
+        new Delete(),
+        new GetCollection(
+            uriTemplate: '/product/latest',
+            controller: ProductLatestController::class,
+            paginationEnabled: false,
+            normalizationContext: ['groups' => ['product:read']],
+            name: 'product_latest'  // Nom optionnel de la route
+        )
     ]
 )]
 class Product

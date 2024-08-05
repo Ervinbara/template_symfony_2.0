@@ -18,3 +18,8 @@ connect_google_check:
 login_check:
     path: /login_check
     methods: POST
+
+# product_latest:
+#     path: /api/products/latest
+#     controller: App\Controller\ProductController::getLatestProducts
+#     methods: ['GET']
