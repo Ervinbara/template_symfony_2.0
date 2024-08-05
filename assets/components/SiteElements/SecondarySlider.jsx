@@ -6,9 +6,10 @@ const SecondarySlider = () => {
     const [slides, setSlides] = useState([]);
 
     useEffect(() => {
-        fetch('/api/secondary-sliders')
-            .then(response => response.json())
-            .then(data => setSlides(data));
+        // Lire les données depuis `window`
+        const fetchedSlides = window.__SECONDARY_SLIDERS__;
+        console.log('Fetched Secondary Sliders:', fetchedSlides); // Debug: Affiche les données récupérées
+        setSlides(fetchedSlides);
     }, []);
 
     const settings = {
@@ -29,7 +30,7 @@ const SecondarySlider = () => {
                     textAlign: 'center',
                 }}
             >
-                <ul style={{ margin: '0px' }}> {dots} </ul>
+                <ul style={{ margin: '0px' }}>{dots}</ul>
             </div>
         ),
         customPaging: i => (

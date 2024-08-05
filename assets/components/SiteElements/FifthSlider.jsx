@@ -6,9 +6,10 @@ const FifthSlider = () => {
     const [slides, setSlides] = useState([]);
 
     useEffect(() => {
-        fetch('/api/fifth-sliders')
-            .then(response => response.json())
-            .then(data => setSlides(data));
+        // Lire les données depuis `window`
+        const fetchedSlides = window.__FIFTH_SLIDERS__;
+        console.log('Fetched Fifth Sliders:', fetchedSlides); // Debug: Affiche les données récupérées
+        setSlides(fetchedSlides);
     }, []);
 
     const settings = {
@@ -29,7 +30,7 @@ const FifthSlider = () => {
                     textAlign: 'center',
                 }}
             >
-                <ul style={{ margin: '0px' }}> {dots} </ul>
+                <ul style={{ margin: '0px' }}>{dots}</ul>
             </div>
         ),
         customPaging: i => (

@@ -59,38 +59,5 @@ class ProductController extends AbstractController
             return new Response('Error: ' . $e->getMessage());
         }
     }
-
-    // #[Route('/json', name: 'product_json', methods: ['GET'])]
-    // public function getProductsJson(): JsonResponse
-    // {
-    //     try {
-    //         // Récupérer les 8 derniers produits
-    //         $products = $this->productRepository->findAll();
-
-    //         if (empty($products)) {
-    //             // Log et retourner une réponse vide si aucun produit n'est trouvé
-    //             $this->logger->info('No products found');
-    //             return new JsonResponse([], JsonResponse::HTTP_OK);
-    //         }
-
-    //         $data = [];
-
-    //         foreach ($products as $product) {
-    //             $data[] = [
-    //                 'id' => $product->getId(),
-    //                 'name' => $product->getName(),
-    //                 'description' => $product->getDescription(),
-    //                 'price' => $product->getPrice(),
-    //                 'stock' => $product->getStock(),
-    //                 'createdAt' => $product->getCreatedAt()?->format('c'),
-    //                 'updatedAt' => $product->getUpdatedAt()?->format('c'),
-    //             ];
-    //         }
-
-    //         return new JsonResponse($data);
-    //     } catch (\Exception $e) {
-    //         $this->logger->error('Error fetching products: ' . $e->getMessage());
-    //         return new JsonResponse(['error' => 'Error fetching products'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-    //     }
-    // }
+ 
 }

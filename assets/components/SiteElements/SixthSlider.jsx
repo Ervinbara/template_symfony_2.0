@@ -7,18 +7,13 @@ const SixthSlider = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch('/api/product/latest')
-            .then(response => {
-                if (!response.ok) {
-                    return response.text().then(text => { throw new Error(text) });
-                }
-                return response.json();
-            })
-            .then(data => setSlides(data))
-            .catch(error => {
-                console.error('Error fetching slides:', error);
-                setError(error.message);
-            });
+        // Lire les données depuis `window`
+        const fetchedSlides = window.__SIXTH_SLIDERS__;
+        if (fetchedSlides) {
+            setSlides(fetchedSlides);
+        } else {
+            setError('No data available');
+        }
     }, []);
 
     const settings = {
@@ -39,7 +34,7 @@ const SixthSlider = () => {
                     textAlign: 'center',
                 }}
             >
-                <ul style={{ margin: '0px' }}> {dots} </ul>
+                <ul style={{ margin: '0px' }}>{dots}</ul>
             </div>
         ),
         customPaging: i => (

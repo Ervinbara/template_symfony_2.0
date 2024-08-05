@@ -6,17 +6,10 @@ const Banner = () => {
     const [banners, setBanners] = useState([]);
 
     useEffect(() => {
-        const fetchBanners = async () => {
-            try {
-                const response = await fetch('/api/banners');
-                const data = await response.json();
-                setBanners(data);
-            } catch (error) {
-                console.error('Error fetching banners:', error);
-            }
-        };
-
-        fetchBanners();
+        // Récupère les bannières à partir de l'objet global
+        const fetchedBanners = window.__BANNERS__;
+        console.log('Fetched Banners:', fetchedBanners); // Debug: Affiche les données récupérées
+        setBanners(fetchedBanners);
     }, []);
 
     const settings = {
