@@ -8,6 +8,7 @@ use App\Entity\Banner;
 use DateTimeImmutable;
 use App\Entity\Product;
 use App\Entity\Category;
+use App\Entity\EndBanner;
 use App\Entity\OrderItem;
 use App\Entity\FifthSlider;
 use App\Entity\SixthSlider;
@@ -139,12 +140,24 @@ class AppFixtures extends Fixture
             // ['type' => 'image', 'src' => '/images/banners/roni.jpg', 'altText' => 'Banner 2'],
         ];
 
+        $endBanners = [
+            ['type' => 'image', 'src' => '/images/banners/roni.jpg', 'altText' => 'Banner 2'],
+        ];
+
         foreach ($banners as $bannerData) {
             $banner = new Banner();
             $banner->setType($bannerData['type']);
             $banner->setSrc($bannerData['src']);
             $banner->setAltText($bannerData['altText']);
             $manager->persist($banner);
+        }
+
+        foreach ($endBanners as $bannerData) {
+            $endBanners = new EndBanner();
+            $endBanners->setType($bannerData['type']);
+            $endBanners->setSrc($bannerData['src']);
+            $endBanners->setAltText($bannerData['altText']);
+            $manager->persist($endBanners);
         }
 
         // Création de 3 sliders secondaires

@@ -2,9 +2,11 @@
 import React from 'react';
 import Header from '../SiteElements/Header';
 import Banner from '../SiteElements/Banner';
+import EndBanner from '../SiteElements/EndBanner';
 import SecondarySlider from '../SiteElements/SecondarySlider';
 import ThirdSlider from '../SiteElements/ThirdSlider';
 import FourthSlider from '../SiteElements/FourthSlider';
+import '../../styles/SiteElements/home-page.css';
 import '../../styles/SiteElements/banner.css';
 import '../../styles/SiteElements/header.css';
 import '../../styles/SiteElements/header.css';
@@ -32,6 +34,7 @@ const HomePage = () => {
             <SixthSlider />
             <p>Plus d'articles</p>
             <FifthSlider />
+            <EndBanner />
         </div>
     );
 };

@@ -31,13 +31,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
         new Post(),
         new Put(),
         new Delete(),
-        new GetCollection(
-            uriTemplate: '/product/latest',
-            controller: ProductLatestController::class,
-            paginationEnabled: false,
-            normalizationContext: ['groups' => ['product:read']],
-            name: 'product_latest'  // Nom optionnel de la route
-        )
     ]
 )]
 class Product

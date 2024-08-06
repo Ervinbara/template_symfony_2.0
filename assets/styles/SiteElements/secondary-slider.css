@@ -1,21 +1,11 @@
+@import 'slider-common.css';
+
+
 .secondary-slider-container {
     position: relative;
     width: 100%;
-    background-color: #fff; /* Fond blanc pour la section */
-    padding: 20px 0;
+    background-color: #fff;
     text-align: center;
-}
-
-.slider-title {
-    font-size: 2.5em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-.slider-subtitle {
-    font-size: 1.5em;
-    margin-bottom: 20px;
 }
 
 .secondary-slider {
@@ -23,110 +13,41 @@
     width: 100%;
 }
 
-.slider-item {
-    position: relative;
-    margin: 0 20px; /* Espacement entre les images */
-}
 
-.slider-image {
-    width: 600px;        /* Largeur fixe pour les images */
-    height: 800px;       /* Hauteur fixe pour les images */
-    object-fit: cover;   /* Assure que l'image couvre le conteneur */
-}
-
-.slider-text {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-}
-
-.text-content h3 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-}
-
-.slider-button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 1.2em;
-    color: #fff;
-    background-color: #333;
-    border: none;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: background-color 0.3s;
-}
-
-.slider-button:hover {
-    background-color: #555;
-}
-
-/* Custom arrows */
-.secondary-slider-container .slick-prev, 
-.secondary-slider-container .slick-next {
-    z-index: 1;
-    width: 40px;
-    height: 40px;
-    background-color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-}
-
-.secondary-slider-container .slick-prev {
-    right: 60px!important; /* Positionnement à droite avec un léger espacement */
-}
-
-.secondary-slider-container .slick-next {
-    right: 10px; /* Positionnement à droite, côte à côte */
-}
-
-.secondary-slider-container .slick-prev:hover, 
-.secondary-slider-container .slick-next:hover {
-    background-color : #c6c6c6;
-}
-
-.slick-prev:before, .slick-next:before {
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    font-size: 20px;
-    line-height: 1;
-    opacity: .75;
-    color: black;
-}
-
-.slick-prev:before {
-    content: "\f053"; /* Code Font Awesome pour le chevron gauche */
-}
-
-.slick-next:before {
-    content: "\f054"; /* Code Font Awesome pour le chevron droit */
-}
-
-/* Custom dots */
-.slick-dots {
-    bottom: 10px;
-}
-
-.slick-dots li button:before {
-    color: #333;
-}
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
-    .slider-image {
-        width: 100%; /* Ajuste la largeur de l'image pour les petits écrans */
-        height: auto; /* Ajuste la hauteur de l'image pour les petits écrans */
+@media (max-width: 1024px) {
+    .secondary-slider-container .slick-prev,
+    .secondary-slider-container .slick-next {
+        width: 35px;
+        height: 35px;
     }
 
-    .slider-item {
-        margin: 0 10px; /* Maintient l'espacement entre les images */
+    .secondary-slider-container .slick-prev {
+        left: -35px;
+    }
+
+    .secondary-slider-container .slick-next {
+        right: -35px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* .slider-item {
+        margin: 0 8px;
+    } */
+
+    .secondary-slider-container .slick-prev,
+    .secondary-slider-container .slick-next {
+        width: 30px;
+        height: 30px;
+    }
+
+    .secondary-slider-container .slick-prev {
+        left: -30px;
+    }
+
+    .secondary-slider-container .slick-next {
+        right: -30px;
     }
 }

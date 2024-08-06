@@ -1,0 +1,25 @@
+@import 'slider-common.css';
+
+
+.fifth-slider-container {
+    position: relative;
+    width: 100%;
+    background-color: #fff;
+    text-align: center;
+}
+
+.fifth-slider {
+    position: relative;
+    width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .fifth-slider-container .slick-prev {
+        right: 40px; /* Réduit l'espacement pour les flèches sur mobile */
+    }
+
+    .fifth-slider-container .slick-next {
+        right: 5px; /* Réduit l'espacement pour les flèches sur mobile */
+    }
+}

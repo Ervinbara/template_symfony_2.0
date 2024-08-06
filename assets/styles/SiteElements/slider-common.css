@@ -1,0 +1,138 @@
+.slider-item {
+    position: relative;
+    margin: 0 7px; /* Espacement augmenté entre les images */
+    box-sizing: border-box;
+    flex: 0 0 auto; /* Les éléments ne rétréciront pas */
+    width: calc(33.33% - 30px); /* Ajustement pour afficher 3 éléments à la fois */
+    scroll-snap-align: start; /* Aligner les éléments au début lors du scroll */
+}
+
+.slider-image {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
+.slider-text {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.text-content h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.slider-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: #fff;
+    background-color: #333;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+}
+
+.slider-button:hover {
+    background-color: #555;
+}
+
+.scroll-slider {
+    display: flex;
+    overflow-x: auto; /* Activer la barre de défilement horizontale */
+    scroll-snap-type: x mandatory; /* Activer le snapping lors du scroll */
+    padding-bottom: 10px; /* Ajouter un padding pour éviter que la scrollbar n'empiète sur le contenu */
+    scrollbar-width: thin; /* Firefox : affichage d'une barre de défilement fine */
+    scrollbar-color: #333 #f1f1f1; /* Firefox : couleur de la barre de défilement */
+    margin-left: 45px; /* Décalage du slider de 45px à gauche */
+}
+
+.scroll-slider::-webkit-scrollbar {
+    height: 8px; /* Hauteur de la barre de défilement */
+}
+
+.scroll-slider::-webkit-scrollbar-thumb {
+    background-color: #333; /* Couleur de la barre de défilement */
+    border-radius: 10px; /* Coins arrondis de la barre de défilement */
+}
+
+.scroll-slider::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Couleur de fond de la track de scroll */
+}
+
+.carousel {
+    margin-bottom: 70px;
+    position: relative;
+}
+
+/* Custom arrows */
+.slick-prev, 
+.slick-next {
+    z-index: 2; /* Assure-toi que les flèches soient au-dessus des images */
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.8); /* Légère transparence pour les flèches */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    top: 50%; /* Positionnement vertical au centre */
+    transform: translateY(-50%); /* Centrage vertical */
+    border: none;
+}
+
+.slick-prev {
+    left: 15px; /* Positionnement à gauche, ajusté pour le décalage */
+}
+
+.slick-next {
+    right: 15px; /* Positionnement à droite, ajusté pour le décalage */
+}
+
+.slick-prev:before, 
+.slick-next:before {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 1;
+    opacity: 0.75;
+    color: black; /* Couleur des icônes */
+}
+
+.slick-prev:before {
+    content: "\f053"; /* Chevron gauche */
+}
+
+.slick-next:before {
+    content: "\f054"; /* Chevron droit */
+}
+
+.slick-prev:hover, 
+.slick-next:hover {
+    background-color: rgba(255, 255, 255, 1); /* Couleur pleine au survol */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .slider-item {
+        margin: 0 10px; /* Ajuste l'espacement entre les images */
+        width: calc(50% - 20px); /* Ajustement pour les écrans moyens */
+    }
+}
+
+@media (max-width: 768px) {
+    .slider-item {
+        margin: 0 8px; /* Ajuste l'espacement entre les images sur les petits écrans */
+        width: calc(100% - 16px); /* Ajustement pour les petits écrans */
+    }
+}

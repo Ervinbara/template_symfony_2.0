@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import Slider from 'react-slick';
+import React, { useEffect, useState, useRef } from 'react';
 import '../../styles/SiteElements/SixthSlider.css';
 
 const SixthSlider = () => {
     const [slides, setSlides] = useState([]);
     const [error, setError] = useState(null);
+    const scrollContainerRef = useRef(null);
 
     useEffect(() => {
-        // Lire les données depuis `window`
         const fetchedSlides = window.__SIXTH_SLIDERS__;
         if (fetchedSlides) {
             setSlides(fetchedSlides);
@@ -16,57 +15,34 @@ const SixthSlider = () => {
         }
     }, []);
 
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 2.5,
-        slidesToScroll: 1,
-        centerMode: true,
-        centerPadding: '40px',
-        arrows: true,
-        appendDots: dots => (
-            <div
-                style={{
-                    bottom: '10px',
-                    position: 'absolute',
-                    width: '100%',
-                    textAlign: 'center',
-                }}
-            >
-                <ul style={{ margin: '0px' }}>{dots}</ul>
-            </div>
-        ),
-        customPaging: i => (
-            <button
-                style={{
-                    backgroundColor: '#333',
-                    borderRadius: '50%',
-                    width: '10px',
-                    height: '10px',
-                    border: 'none',
-                }}
-            />
-        ),
-        responsive: [
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    centerMode: false,
-                },
-            },
-        ],
+    const scrollLeft = () => {
+        if (scrollContainerRef.current) {
+            const itemWidth = scrollContainerRef.current.querySelector('.slider-item').offsetWidth;
+            scrollContainerRef.current.scrollBy({
+                left: -itemWidth,
+                behavior: 'smooth'
+            });
+        }
+    };
+
+    const scrollRight = () => {
+        if (scrollContainerRef.current) {
+            const itemWidth = scrollContainerRef.current.querySelector('.slider-item').offsetWidth;
+            scrollContainerRef.current.scrollBy({
+                left: itemWidth,
+                behavior: 'smooth'
+            });
+        }
     };
 
     return (
-        <div className="sixth-slider-container">
-            <div className="sixth-slider">
-                {error ? (
-                    <p>Error fetching slides: {error}</p>
-                ) : (
-                    <Slider {...settings}>
+        <div className="sixth-slider-container carousel">
+            {error ? (
+                <p>Error fetching slides: {error}</p>
+            ) : (
+                <>
+                    <button className="slick-prev" onClick={scrollLeft}></button>
+                    <div className="sixth-slider scroll-slider" ref={scrollContainerRef}>
                         {slides.map((slide, index) => (
                             <div key={index} className="slider-item">
                                 <img
@@ -84,9 +60,10 @@ const SixthSlider = () => {
                                 )}
                             </div>
                         ))}
-                    </Slider>
-                )}
-            </div>
+                    </div>
+                    <button className="slick-next" onClick={scrollRight}></button>
+                </>
+            )}
         </div>
     );
 };
