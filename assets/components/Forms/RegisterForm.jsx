@@ -1,5 +1,6 @@
 // assets/components/Pages/RegisterPage.jsx
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../../styles/Pages/AuthPage.css'; // Importation des styles spécifiques
 
 const RegisterPage = () => {
@@ -36,7 +37,9 @@ const RegisterPage = () => {
     return (
         <div className="auth-page">
             <header className="auth-header">
+            <Link to="/">
                 <img src="/path/to/logo.png" alt="Logo" className="auth-logo" />
+            </Link>
                 <h1 className="auth-title">Register</h1>
             </header>
 

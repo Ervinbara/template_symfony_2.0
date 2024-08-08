@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const messages = [
@@ -26,6 +26,9 @@ const Header = () => {
     const [searchSidebarOpen, setSearchSidebarOpen] = useState(false);
     const messageTimeoutRef = useRef(null);
     const navigate = useNavigate();
+    const location = useLocation();
+    
+    const isAuthPage = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/cart';
 
     useEffect(() => {
         if (searchQuery) {
@@ -80,6 +83,10 @@ const Header = () => {
     const closeSearchSidebar = () => {
         setSearchSidebarOpen(false);
     };
+
+    if (isAuthPage) {
+        return null; // Hide the header on login and register pages
+    }
 
     return (
         <header className="header">

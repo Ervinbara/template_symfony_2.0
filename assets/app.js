@@ -16,6 +16,7 @@ import "slick-carousel/slick/slick-theme.css";
 import ProtectedRoute from './components/Security/ProtectedRoute';
 import Header from './components/SiteElements/Header';
 import SearchResults from './components/SiteElements/SearchResults';
+import Footer from './components/SiteElements/Footer';  // Import Footer component
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
@@ -42,6 +43,7 @@ root.render(
                     <Route path="/logout" element={<HomePage />} />
                     <Route path="/search" element={<SearchResults />} />
                 </Routes>
+                <Footer /> 
             </Router>
         </AuthProvider>
     </React.StrictMode>

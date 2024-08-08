@@ -15,7 +15,6 @@ const ProductList = () => {
             try {
                 const response = await fetch('/api/categories');
                 const data = await response.json();
-                console.log('Fetched categories:', data);
                 setCategories(data['hydra:member']);
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -23,7 +22,7 @@ const ProductList = () => {
         };
 
         fetchCategories();
-    }, []); 
+    }, []);
 
     // Fetch products on component mount
     useEffect(() => {
@@ -31,7 +30,6 @@ const ProductList = () => {
             try {
                 const response = await fetch('/api/products');
                 const data = await response.json();
-                console.log('Fetched products:', data);
                 setProducts(data['hydra:member']);
                 setFilteredProducts(data['hydra:member']); // Initial display
             } catch (error) {
@@ -40,21 +38,14 @@ const ProductList = () => {
         };
 
         fetchProducts();
-    }, []); 
+    }, []);
 
     // Filter products based on the selected category
     const filterProducts = () => {
-        console.log('Selected Category:', selectedCategory);
-        console.log('All Products:', products);
-
         if (selectedCategory === '') {
             setFilteredProducts(products); // Show all products if no category selected
         } else {
-            const filtered = products.filter(product => {
-                console.log('Product Category ID:', product.category.id);
-                return product.category.id.toString() === selectedCategory;
-            });
-            console.log('Filtered products:', filtered);
+            const filtered = products.filter(product => product.category.id.toString() === selectedCategory);
             setFilteredProducts(filtered);
         }
     };

@@ -107,3 +107,7 @@
 .footer-link:hover {
     text-decoration: underline;
 }
+
+footer.auth-footer{
+    display: none;
+}
