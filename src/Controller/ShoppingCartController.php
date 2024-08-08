@@ -69,70 +69,69 @@ class ShoppingCartController extends AbstractController
     #[Route('/api/cart/add', name: 'add_to_cart', methods: ['POST'])]
     public function addToCart(Request $request, ProductRepository $productRepository, EntityManagerInterface $entityManager, CartRepository $cartRepository): Response
     {
-        // Récupère l'utilisateur actuellement connecté
         $user = $this->getUser();
-        
-        // Décode les données JSON envoyées dans la requête
         $data = json_decode($request->getContent(), true);
     
-        // Vérifie que les données nécessaires (product_id et quantity) sont présentes dans la requête
         if (!isset($data['product_id']) || !isset($data['quantity'])) {
-            return $this->json(['error' => 'Invalid input'], 400); // Retourne une erreur si les données sont invalides
+            return $this->json(['error' => 'Invalid input'], 400);
         }
     
         $productId = $data['product_id'];
         $quantity = $data['quantity'];
     
-        // Logs pour le débogage
-        error_log('Received productId: ' . $productId);
-        error_log('Received quantity: ' . $quantity);
-    
-        // Cherche le panier associé à l'utilisateur courant dans le repository de paniers
         $cart = $cartRepository->findOneBy(['user' => $user]);
     
         if (!$cart) {
-            // Si le panier n'existe pas, crée un nouveau panier
             $cart = new Cart();
             $cart->setUser($user);
-            $cart->setCreatedAt(new \DateTimeImmutable()); // Définit la date de création du panier
-            $cart->setUpdatedAt(new \DateTimeImmutable()); // Définit la date de mise à jour du panier
-            $entityManager->persist($cart); // Persiste le nouveau panier dans la base de données
+            $cart->setCreatedAt(new \DateTimeImmutable());
+            $cart->setUpdatedAt(new \DateTimeImmutable());
+            $entityManager->persist($cart);
         }
     
-        // Cherche le produit dans le repository de produits
         $product = $productRepository->find($productId);
     
         if (!$product) {
-            // Si le produit n'existe pas, retourne une erreur
             return $this->json(['error' => 'Product not found'], 404);
         }
     
-        // Cherche si le produit est déjà dans le panier
         $cartItem = $cart->getCartItems()->filter(function ($item) use ($product) {
             return $item->getProduct() === $product;
         })->first();
     
         if ($cartItem) {
-            // Si le produit est déjà dans le panier, met à jour la quantité
             $cartItem->setQuantity($cartItem->getQuantity() + $quantity);
         } else {
-            // Si le produit n'est pas encore dans le panier, ajoute un nouvel élément
             $cartItem = new CartItem();
-            $cartItem->setProduct($product); // Associe le produit à l'élément du panier
-            $cartItem->setQuantity($quantity); // Définit la quantité
-            $cartItem->setCart($cart); // Associe l'élément du panier au panier
-            $cart->addCartItem($cartItem); // Ajoute l'élément du panier au panier
+            $cartItem->setProduct($product);
+            $cartItem->setQuantity($quantity);
+            $cartItem->setCart($cart);
+            $cart->addCartItem($cartItem);
         }
     
-        // Met à jour la date de mise à jour du panier
         $cart->setUpdatedAt(new \DateTimeImmutable());
-        
-        // Enregistre toutes les modifications dans la base de données
         $entityManager->flush();
     
-        // Retourne une réponse JSON confirmant que le produit a été ajouté avec succès
-        return $this->json(['message' => 'Product added to cart successfully'], 200);
+        // Ajout d'un log pour le contenu du panier mis à jour
+        error_log('Updated Cart: ' . print_r($cart->getCartItems()->toArray(), true));
+    
+        // Retourne le panier complet mis à jour
+        $updatedCartItems = $cart->getCartItems()->map(function ($item) {
+            return [
+                'id' => $item->getId(),
+                'product' => [
+                    'id' => $item->getProduct()->getId(),
+                    'name' => $item->getProduct()->getName(),
+                    'price' => $item->getProduct()->getPrice(),
+                    'imageUrl' => $item->getProduct()->getImageUrl(),
+                ],
+                'quantity' => $item->getQuantity(),
+            ];
+        })->toArray();
+    
+        return $this->json(['cartItems' => $updatedCartItems, 'message' => 'Product added to cart successfully'], 200);
     }
+    
     
 
     #[Route('/api/cart/remove', name: 'remove_from_cart', methods: ['POST'])]

@@ -13,8 +13,7 @@ const ProductList = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await fetch('/api/categories');
-                const data = await response.json();
+                const { data } = await axios.get('/api/categories');
                 setCategories(data['hydra:member']);
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -28,8 +27,7 @@ const ProductList = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('/api/products');
-                const data = await response.json();
+                const { data } = await axios.get('/api/products');
                 setProducts(data['hydra:member']);
                 setFilteredProducts(data['hydra:member']); // Initial display
             } catch (error) {
@@ -60,17 +58,37 @@ const ProductList = () => {
         filterProducts();
     };
 
-    const addToCart = (productId) => {
-        console.log(`Adding product ID: ${productId} to cart`);
-
-        axios.post('/api/cart/add', { product_id: productId, quantity: 1 })
-            .then(response => {
-                console.log('Product added to cart:', response.data);
-            })
-            .catch(error => {
-                console.error('Error adding to cart:', error);
-            });
+    // Handle add to cart
+    const calculateCartTotal = (cartItems) => {
+        return cartItems.reduce((total, item) => total + (item.product.price * item.quantity), 0).toFixed(2);
     };
+    
+    const addToCart = async (productId) => {
+        console.log(`Adding product ID: ${productId} to cart`);
+    
+        try {
+            const dataToSend = { product_id: productId, quantity: 1 };
+            console.log('Data being sent to the server:', dataToSend);
+    
+            // Add product to cart
+            const response = await axios.post('/api/cart/add', dataToSend);
+            // console.log('Server response after adding product:', response.data);
+    
+            // Fetch updated cart contents
+            const updatedCartResponse = await axios.get('/api/cart');
+            const updatedCartItems = updatedCartResponse.data.cartItems || [];
+            
+            console.log('Updated cart items:', updatedCartItems);
+    
+            // Calculate and log the updated cart total
+            const cartTotal = calculateCartTotal(updatedCartItems);
+            console.log('Updated Cart Total:', cartTotal);
+    
+        } catch (error) {
+            console.error('Error adding to cart:', error.response ? error.response.data : error.message);
+        }
+    };
+    
 
     return (
         <div className="container product-list">
