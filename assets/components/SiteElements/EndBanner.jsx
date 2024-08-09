@@ -4,12 +4,26 @@ import '../../styles/SiteElements/end-banner.css';
 
 const EndBanner = () => {
     const [banners, setBanners] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Récupère les bannières à partir de l'objet global
-        const fetchedBanners = window.__END_BANNERS__;
-        console.log('Fetched Banners:', fetchedBanners); // Debug: Affiche les données récupérées
-        setBanners(fetchedBanners);
+        const fetchBanners = async () => {
+            try {
+                const response = await fetch('/api/end-banners'); // Modifier l'URL si nécessaire
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setBanners(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchBanners();
     }, []);
 
     const settings = {
@@ -20,6 +34,14 @@ const EndBanner = () => {
         slidesToScroll: 1,
         arrows: banners.length > 1,
     };
+
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Error: {error}</p>;
+    }
 
     return (
         <div className="endBanner-container">

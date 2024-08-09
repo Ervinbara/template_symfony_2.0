@@ -5,13 +5,5 @@
 {% block title %}Main{% endblock %}
 
 {% block body %}
-<script>
-    window.__BANNERS__ = {{ banners|json_encode|raw }};
-    window.__END_BANNERS__ = {{ banners|json_encode|raw }};
-    window.__SECONDARY_SLIDERS__ = {{ secondarySliders|json_encode|raw }};
-    window.__THIRD_SLIDERS__ = {{ thirdSliders|json_encode|raw }};
-    window.__FOURTH_SLIDERS__ = {{ fourthSliders|json_encode|raw }};
-    window.__FIFTH_SLIDERS__ = {{ fifthSliders|json_encode|raw }};
-    window.__SIXTH_SLIDERS__ = {{ sixthSliders|json_encode|raw }};
-</script>
+
 {% endblock %}

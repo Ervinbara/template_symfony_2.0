@@ -123,7 +123,7 @@ class ShoppingCartController extends AbstractController
                     'id' => $item->getProduct()->getId(),
                     'name' => $item->getProduct()->getName(),
                     'price' => $item->getProduct()->getPrice(),
-                    'imageUrl' => $item->getProduct()->getImageUrl(),
+                    'imageUrl' => $item->getProduct()->getImage(),
                 ],
                 'quantity' => $item->getQuantity(),
             ];

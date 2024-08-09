@@ -8,7 +8,7 @@ use App\Entity\SecondarySlider;
 use App\Entity\ThirdSlider;
 use App\Entity\FourthSlider;
 use App\Entity\FifthSlider;
-use App\Entity\SixthSlider;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +16,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BannerController extends AbstractController
 {
-    #[Route('/api/banners', name: 'api_banners', methods: ['GET'])]
-    public function getBanners(EntityManagerInterface $entityManager): Response
+    private EntityManagerInterface $entityManager;
+    private ProductRepository $productRepository;
+
+    public function __construct(EntityManagerInterface $entityManager, ProductRepository $productRepository)
     {
-        $banners = $entityManager->getRepository(Banner::class)->findAll();
+        $this->entityManager = $entityManager;
+        $this->productRepository = $productRepository;
+    }
+
+    #[Route('/api/banners', name: 'api_banners', methods: ['GET'])]
+    public function getBanners(): Response
+    {
+        $banners = $this->entityManager->getRepository(Banner::class)->findAll();
 
         $bannerData = array_map(function ($banner) {
             return [
@@ -32,26 +41,26 @@ class BannerController extends AbstractController
         return $this->json($bannerData);
     }
 
-    // #[Route('/api/end-banners', name: 'api_end_banners', methods: ['GET'])]
-    // public function getBanners(EntityManagerInterface $entityManager): Response
-    // {
-    //     $banners = $entityManager->getRepository(EndBanner::class)->findAll();
+    #[Route('/api/end-banners', name: 'api_end_banners', methods: ['GET'])]
+    public function getEndBanners(): Response
+    {
+        $banners = $this->entityManager->getRepository(EndBanner::class)->findAll();
 
-    //     $bannerData = array_map(function ($banner) {
-    //         return [
-    //             'type' => $banner->getType(),
-    //             'src' => $banner->getSrc(),
-    //             'altText' => $banner->getAltText(),
-    //         ];
-    //     }, $banners);
+        $bannerData = array_map(function ($banner) {
+            return [
+                'type' => $banner->getType(),
+                'src' => $banner->getSrc(),
+                'altText' => $banner->getAltText(),
+            ];
+        }, $banners);
 
-    //     return $this->json($bannerData);
-    // }
+        return $this->json($bannerData);
+    }
 
     #[Route('/api/secondary-sliders', name: 'api_secondary_sliders', methods: ['GET'])]
-    public function getSecondarySliders(EntityManagerInterface $entityManager): Response
+    public function getSecondarySliders(): Response
     {
-        $sliders = $entityManager->getRepository(SecondarySlider::class)->findAll();
+        $sliders = $this->entityManager->getRepository(SecondarySlider::class)->findAll();
 
         $sliderData = array_map(function ($slider) {
             return [
@@ -65,9 +74,9 @@ class BannerController extends AbstractController
     }
 
     #[Route('/api/third-sliders', name: 'api_third_sliders', methods: ['GET'])]
-    public function getThirdSliders(EntityManagerInterface $entityManager): Response
+    public function getThirdSliders(): Response
     {
-        $sliders = $entityManager->getRepository(ThirdSlider::class)->findAll();
+        $sliders = $this->entityManager->getRepository(ThirdSlider::class)->findAll();
 
         $sliderData = array_map(function ($slider) {
             return [
@@ -81,9 +90,9 @@ class BannerController extends AbstractController
     }
 
     #[Route('/api/fourth-sliders', name: 'api_fourth_sliders', methods: ['GET'])]
-    public function getFourthSliders(EntityManagerInterface $entityManager): Response
+    public function getFourthSliders(): Response
     {
-        $sliders = $entityManager->getRepository(FourthSlider::class)->findAll();
+        $sliders = $this->entityManager->getRepository(FourthSlider::class)->findAll();
 
         $sliderData = array_map(function ($slider) {
             return [
@@ -97,9 +106,9 @@ class BannerController extends AbstractController
     }
 
     #[Route('/api/fifth-sliders', name: 'api_fifth_sliders', methods: ['GET'])]
-    public function getFifthSliders(EntityManagerInterface $entityManager): Response
+    public function getFifthSliders(): Response
     {
-        $sliders = $entityManager->getRepository(FifthSlider::class)->findAll();
+        $sliders = $this->entityManager->getRepository(FifthSlider::class)->findAll();
 
         $sliderData = array_map(function ($slider) {
             return [
@@ -113,15 +122,16 @@ class BannerController extends AbstractController
     }
 
     #[Route('/api/sixth-sliders', name: 'api_sixth_sliders', methods: ['GET'])]
-    public function getSixthSliders(EntityManagerInterface $entityManager): Response
+    public function getSixthSliders(): Response
     {
-        $sliders = $entityManager->getRepository(SixthSlider::class)->findAll();
+        $limit = 8;
+        $sliders = $this->productRepository->findLatestProducts($limit);
 
         $sliderData = array_map(function ($slider) {
             return [
-                'src' => $slider->getSrc(),
-                'altText' => $slider->getAltText(),
-                'caption' => $slider->getCaption(),
+                'src' => $slider->getImage(),
+                'altText' => $slider->getDescription(),
+                'caption' => $slider->getName(),
             ];
         }, $sliders);
 

@@ -3,16 +3,28 @@ import '../../styles/SiteElements/SixthSlider.css';
 
 const SixthSlider = () => {
     const [slides, setSlides] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const scrollContainerRef = useRef(null);
 
     useEffect(() => {
-        const fetchedSlides = window.__SIXTH_SLIDERS__;
-        if (fetchedSlides) {
-            setSlides(fetchedSlides);
-        } else {
-            setError('No data available');
-        }
+        const fetchSlides = async () => {
+            try {
+                const response = await fetch('/api/sixth-sliders');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                console.log('Fetched Sixth Sliders:', data); // Ajoutez ce log pour vérifier les données
+                setSlides(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchSlides();
     }, []);
 
     const scrollLeft = () => {
@@ -35,35 +47,41 @@ const SixthSlider = () => {
         }
     };
 
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Error fetching slides: {error}</p>;
+    }
+
     return (
         <div className="sixth-slider-container carousel">
-            {error ? (
-                <p>Error fetching slides: {error}</p>
-            ) : (
-                <>
-                    <button className="slick-prev" onClick={scrollLeft}></button>
-                    <div className="sixth-slider scroll-slider" ref={scrollContainerRef}>
-                        {slides.map((slide, index) => (
-                            <div key={index} className="slider-item">
-                                <img
-                                    src={slide.src}
-                                    alt={slide.altText || 'Product Image'}
-                                    className="slider-image"
-                                />
-                                {slide.caption && (
-                                    <div className="slider-text">
-                                        <div className="text-content">
-                                            <h3>{slide.caption}</h3>
-                                            <button className="slider-button">En savoir plus</button>
-                                        </div>
+            <button className="slick-prev" onClick={scrollLeft}></button>
+            <div className="sixth-slider scroll-slider" ref={scrollContainerRef}>
+                {slides.length > 0 ? (
+                    slides.map((slide, index) => (
+                        <div key={index} className="slider-item">
+                            <img
+                                src={slide.src}
+                                alt={slide.altText || 'Product Image'}
+                                className="slider-image"
+                            />
+                            {slide.caption && (
+                                <div className="slider-text">
+                                    <div className="text-content">
+                                        <h3>{slide.caption}</h3>
+                                        <button className="slider-button">En savoir plus</button>
                                     </div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                    <button className="slick-next" onClick={scrollRight}></button>
-                </>
-            )}
+                                </div>
+                            )}
+                        </div>
+                    ))
+                ) : (
+                    <p>No slides to display</p>
+                )}
+            </div>
+            <button className="slick-next" onClick={scrollRight}></button>
         </div>
     );
 };

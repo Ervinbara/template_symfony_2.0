@@ -3,12 +3,27 @@ import '../../styles/SiteElements/fifth-slider.css';
 
 const FifthSlider = () => {
     const [slides, setSlides] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
     const scrollContainerRef = useRef(null);
 
     useEffect(() => {
-        const fetchedSlides = window.__FIFTH_SLIDERS__;
-        console.log('Fetched Fifth Sliders:', fetchedSlides);
-        setSlides(fetchedSlides);
+        const fetchSlides = async () => {
+            try {
+                const response = await fetch('/api/fifth-sliders'); // Modifier l'URL si nécessaire
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setSlides(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchSlides();
     }, []);
 
     const scrollLeft = () => {
@@ -31,23 +46,35 @@ const FifthSlider = () => {
         }
     };
 
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Error: {error}</p>;
+    }
+
     return (
         <div className="fifth-slider-container carousel">
             <button className="slick-prev" onClick={scrollLeft}></button>
             <div className="fifth-slider scroll-slider" ref={scrollContainerRef}>
-                {slides.map((slide, index) => (
-                    <div key={index} className="slider-item">
-                        <img src={slide.src} alt={slide.altText} className="slider-image" />
-                        {slide.caption && (
-                            <div className="slider-text">
-                                <div className="text-content">
-                                    <h3>{slide.caption}</h3>
-                                    <button className="slider-button">En savoir plus</button>
+                {slides.length > 0 ? (
+                    slides.map((slide, index) => (
+                        <div key={index} className="slider-item">
+                            <img src={slide.src} alt={slide.altText} className="slider-image" />
+                            {slide.caption && (
+                                <div className="slider-text">
+                                    <div className="text-content">
+                                        <h3>{slide.caption}</h3>
+                                        <button className="slider-button">En savoir plus</button>
+                                    </div>
                                 </div>
-                            </div>
-                        )}
-                    </div>
-                ))}
+                            )}
+                        </div>
+                    ))
+                ) : (
+                    <p>No slides to display</p>
+                )}
             </div>
             <button className="slick-next" onClick={scrollRight}></button>
         </div>

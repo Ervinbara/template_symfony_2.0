@@ -113,11 +113,11 @@ const Header = () => {
                 </div>
 
                 <ul className="nav-links">
-                    <li><Link to="/new-arrivals">Nouveautés du moment</Link></li>
-                    <li><Link to="/men">Homme</Link></li>
-                    <li><Link to="/women">Femme</Link></li>
-                    <li><Link to="/kids">Enfant</Link></li>
-                    <li><Link to="/offers">Offres</Link></li>
+                    <li><Link to="/product">Nouveautés du moment</Link></li>
+                    <li><Link to="/product">Homme</Link></li>
+                    <li><Link to="/product">Femme</Link></li>
+                    <li><Link to="/product">Enfant</Link></li>
+                    <li><Link to="/product">Offres</Link></li>
                 </ul>
 
                 <div className="search-container">

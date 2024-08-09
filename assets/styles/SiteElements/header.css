@@ -63,6 +63,7 @@ body, html {
 
 .nav-links li {
     margin-left: 20px;
+    position: relative;
 }
 
 .nav-links a {
@@ -70,6 +71,27 @@ body, html {
     color: #111111;
     font-size: 16px;
     font-weight: 500;
+    padding: 10px 0; /* Add padding to help with hover effect */
+}
+
+/* Border bottom effect */
+.nav-links a::after {
+    content: '';
+    display: block;
+    height: 2px;
+    background: #000; /* Black border */
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
 }
 
 .search-container {
@@ -96,11 +118,10 @@ body, html {
     background-color: #c1c1c1;
 }
 
-
 .search-bar .search-icon {
     position: absolute;
-    left: -7px; /* Icon position adjusted to be on the left */
-    top: 50%;
+    left: -53px; /* Icon position adjusted to be on the left */
+    top: 30%;
     transform: translateY(-50%);
     background: none;
     border: none;
@@ -329,7 +350,8 @@ body, html {
     }
 
     .search-bar .search-icon {
-        left: -45px;
+        left: -35px;
+        top : -8px;
     }
 
     .hamburger-menu {
@@ -359,56 +381,22 @@ body, html {
     }
 
     .search-bar .search-icon {
-        font-size: 24px; /* Larger search icon on mobile/tablet */
+        font-size: 22px; /* Larger search icon on mobile/tablet */
     }
 
     /* Align icons to the right in the specified order */
     .icon-container .search-icon {
         order: 1;
     }
-
-    .icon-container .profile-icon {
-        order: 2;
-    }
-
-    .icon-container .cart-icon {
-        order: 3;
-    }
-
-    .icon-container .hamburger-menu {
-        order: 4;
-    }
 }
 
 /* Mobile Devices */
-@media (max-width: 767px) {
-    .main-nav {
-        justify-content: flex-end;
-        padding: 16px 45px;
+@media (max-width: 768px) {
+    .search-sidebar.open {
+        height: 70%;
     }
 
-    .nav-links {
-        display: none;
+    .search-sidebar .search-content form {
+        width: 85%;
     }
-
-    .search-bar .search-icon {
-        left: -45px;
-    }
-
-    /* Same icon order for mobile as for tablets */
-    /* .icon-container .search-icon {
-        order: 1;
-    }
-
-    .icon-container .profile-icon {
-        order: 2;
-    }
-
-    .icon-container .cart-icon {
-        order: 3;
-    }
-
-    .icon-container .hamburger-menu {
-        order: 4;
-    } */
 }
