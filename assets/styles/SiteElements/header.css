@@ -121,7 +121,7 @@ body, html {
 .search-bar .search-icon {
     position: absolute;
     left: 8px; /* Icon position adjusted to be on the left */
-    top: 22px;
+    top : 21px;
     transform: translateY(-50%);
     background: none;
     border: none;
@@ -349,10 +349,6 @@ body, html {
         padding: 16px 45px;
     }
 
-    .search-bar .search-icon {
-        left: -35px;
-    }
-
     .hamburger-menu {
         display: block;
     }
@@ -380,7 +376,9 @@ body, html {
     }
 
     .search-bar .search-icon {
-        font-size: 22px; /* Larger search icon on mobile/tablet */
+        font-size: 20px; /* Larger search icon on mobile/tablet */
+        left: -30px;
+        top: 0;
     }
 
     /* Align icons to the right in the specified order */
@@ -391,6 +389,9 @@ body, html {
 
 /* Mobile Devices */
 @media (max-width: 768px) {
+    .search-bar .search-icon {
+        top: 22px;
+    }
     .search-sidebar.open {
         height: 70%;
     }
