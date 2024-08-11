@@ -4,103 +4,137 @@
     max-width: 1000px;
     margin: 0 auto;
     font-family: Arial, sans-serif;
+    color: #333;
 }
 
 /* Titre du panier */
 .cart-container h1 {
     text-align: center;
     margin-bottom: 20px;
+    font-size: 2rem;
+    color: #111;
 }
 
 /* Liste des articles du panier */
 .cart-item-list {
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
 /* Élément de la liste */
 .cart-item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     border-bottom: 1px solid #ddd;
-    padding: 10px;
+    padding: 15px 0;
     margin-bottom: 10px;
+}
+
+/* Image du produit */
+.cart-item-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Détails de l'article */
 .cart-item-details {
     flex: 1;
     margin-left: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Nom du produit */
 .cart-item-name {
-    font-size: 18px;
-    margin: 0 0 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #111;
 }
 
-/* Quantité et prix */
-.cart-item-quantity,
-.cart-item-price {
-    margin: 0;
-}
-
-/* Boutons d'action */
-.cart-item-buttons {
+/* Section de quantité */
+.cart-item-quantity {
     display: flex;
     align-items: center;
+    margin: 10px 0;
 }
 
 /* Boutons d'incrémentation et décrémentation */
 .quantity-button {
-    background-color: #4caf50;
+    background-color: #959b95;
     color: white;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
     font-size: 16px;
     margin: 0 5px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+}
+
+.quantity-button:hover {
+    background-color: #45a049;
 }
 
 /* Bouton de suppression */
 .remove-button {
-    background-color: #ff4d4d;
+    background-color: #000000;
     color: white;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+    width: 100px;
 }
 
-/* Boutons de suppression et validation */
-.remove-button:hover,
-.quantity-button:hover {
-    opacity: 0.8;
+.remove-button:hover {
+    background-color: #313131;
 }
 
-/* Message lorsque le panier est vide */
-.empty-cart-message {
-    text-align: center;
-    font-size: 18px;
-    color: #666;
-    margin-top: 20px;
+/* Prix et total */
+.cart-item-price {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.cart-item-total {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #111;
 }
 
 /* Résumé du panier */
 .cart-summary {
     margin-top: 20px;
     text-align: right;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 /* Bouton de validation de commande */
 .checkout-button {
-    background-color: #4caf50;
+    background-color: #000000;
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     font-size: 18px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
 }
 
 .checkout-button:hover {
     background-color: #45a049;
+}
+
+.empty-cart-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #777;
 }

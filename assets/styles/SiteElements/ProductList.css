@@ -47,7 +47,7 @@
     margin-bottom: 1rem;
 }
 
-button {
+.product-list button {
     width: 100%;
     padding: 10px;
     background-color: #111;
@@ -61,7 +61,7 @@ button {
     margin-top: 10px;
 }
 
-button:hover {
+.product-list button:hover {
     background-color: #333;
 }
 

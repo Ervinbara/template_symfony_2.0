@@ -1,0 +1,107 @@
+/* Conteneur principal */
+.checkout-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Titre de la page */
+.checkout-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Labels des champs de formulaire */
+.checkout-container label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* Inputs de texte */
+.checkout-container input[type="text"],
+.checkout-container select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border 0.3s ease;
+}
+
+/* Sélecteur personnalisé pour les pays */
+.checkout-container .react-select__control {
+    margin-bottom: 20px;
+}
+
+/* Cartes bancaires - éléments de Stripe */
+.checkout-container .StripeElement {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    transition: border 0.3s ease;
+}
+
+/* Styles lors du focus des inputs */
+.checkout-container input:focus,
+.checkout-container .StripeElement--focus {
+    border-color: #007bff;
+}
+
+/* Bouton de soumission */
+.checkout-container button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.checkout-container button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.checkout-container button[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Message d'erreur */
+.checkout-container p {
+    color: #d9534f;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Champs d'adresse */
+.address-fields {
+    margin-top: 20px;
+}
+
+/* Ajustement des champs d'adresse */
+.address-fields input {
+    margin-bottom: 15px;
+}
+
+/* Section des informations de paiement */
+.payment-info {
+    margin-top: 20px;
+}

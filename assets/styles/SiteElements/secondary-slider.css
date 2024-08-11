@@ -16,38 +16,12 @@
 
 
 /* Responsive adjustments */
-@media (max-width: 1024px) {
-    .secondary-slider-container .slick-prev,
-    .secondary-slider-container .slick-next {
-        width: 35px;
-        height: 35px;
-    }
-
-    .secondary-slider-container .slick-prev {
-        left: -35px;
-    }
-
-    .secondary-slider-container .slick-next {
-        right: -35px;
-    }
-}
-
 @media (max-width: 768px) {
-    /* .slider-item {
-        margin: 0 8px;
-    } */
-
-    .secondary-slider-container .slick-prev,
-    .secondary-slider-container .slick-next {
-        width: 30px;
-        height: 30px;
-    }
-
     .secondary-slider-container .slick-prev {
-        left: -30px;
+        right: 40px; /* Réduit l'espacement pour les flèches sur mobile */
     }
 
     .secondary-slider-container .slick-next {
-        right: -30px;
+        right: 5px; /* Réduit l'espacement pour les flèches sur mobile */
     }
 }

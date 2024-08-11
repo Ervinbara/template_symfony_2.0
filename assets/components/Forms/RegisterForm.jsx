@@ -37,9 +37,9 @@ const RegisterPage = () => {
     return (
         <div className="auth-page">
             <header className="auth-header">
-            <Link to="/">
-                <img src="/path/to/logo.png" alt="Logo" className="auth-logo" />
-            </Link>
+                <Link to="/">
+                    <img src="/path/to/logo.png" alt="Logo" className="auth-logo" />
+                </Link>
                 <h1 className="auth-title">Register</h1>
             </header>
 
@@ -55,6 +55,7 @@ const RegisterPage = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                             className="form-input"
+                            placeholder="Your email address"
                         />
                     </div>
                     <div className="form-group">
@@ -66,6 +67,7 @@ const RegisterPage = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             className="form-input"
+                            placeholder="Your password"
                         />
                     </div>
                     <div className="form-group">
@@ -77,13 +79,14 @@ const RegisterPage = () => {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             required
                             className="form-input"
+                            placeholder="Confirm your password"
                         />
                     </div>
                     {error && <div className="error-message">{error}</div>}
                     <button type="submit" className="submit-button">Register</button>
                 </form>
                 <div className="auth-links">
-                    <a href="/login">Back to Login</a>
+                    <Link to="/login">Back to Login</Link>
                 </div>
             </main>
 

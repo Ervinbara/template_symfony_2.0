@@ -94,28 +94,28 @@ const CartPage = () => {
                 <ul className="cart-item-list">
                     {cartItems.map(item => (
                         <li key={item.id} className="cart-item">
-                            <img src={item.product.imageUrl} alt={item.product.name} className="cart-item-image" />
+                            <img src={item.product.image} alt={item.product.name} className="cart-item-image" />
                             <div className="cart-item-details">
                                 <span className="cart-item-name">{item.product.name}</span>
-                                <div className="cart-item-buttons">
+                                <div className="cart-item-quantity">
                                     <button className="quantity-button" onClick={() => handleDecrement(item.id, item.quantity)}>-</button>
                                     <span>{item.quantity}</span>
                                     <button className="quantity-button" onClick={() => handleIncrement(item.id, item.quantity)}>+</button>
                                 </div>
-                                <p className="cart-item-price">Prix: ${item.product.price.toFixed(2)}</p>
+                                <p className="cart-item-price">Prix: {item.product.price.toFixed(2)} €</p>
                                 <button className="remove-button" onClick={() => removeCartItem(item.id)}>Supprimer</button>
                             </div>
-                            <p className="cart-item-total">Total: ${(item.product.price * item.quantity).toFixed(2)}</p>
+                            <p className="cart-item-total">Total: {(item.product.price * item.quantity).toFixed(2)} €</p>
                         </li>
                     ))}
                 </ul>
             )}
             <div className="cart-summary">
-                <p className="cart-total">Total du Panier: ${calculateTotal()}</p>
+                <p className="cart-total">Total du Panier: {calculateTotal()} €</p>
                 <button 
                     className="checkout-button" 
                     onClick={handleCheckout} 
-                    disabled={cartItems.length === 0} // Désactiver le bouton si le panier est vide
+                    disabled={cartItems.length === 0}
                 >
                     Valider la Commande
                 </button>

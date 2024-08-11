@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../../styles/Pages/AuthPage.css'; // Importation des styles spécifiques
+import { FaGoogle } from 'react-icons/fa'; // Importer une icône Google depuis react-icons
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -36,7 +38,9 @@ const LoginPage = () => {
     return (
         <div className="auth-page">
             <header className="auth-header">
-                <img src="/path/to/logo.png" alt="Logo" className="auth-logo" />
+                <Link to="/">
+                    <img src="/path/to/logo.png" alt="Logo" className="auth-logo" />
+                </Link>
                 <h1 className="auth-title">Login</h1>
             </header>
 
@@ -52,6 +56,7 @@ const LoginPage = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                             className="form-input"
+                            placeholder="Your email address"
                         />
                     </div>
                     <div className="form-group">
@@ -63,16 +68,17 @@ const LoginPage = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             className="form-input"
+                            placeholder="Your password"
                         />
                     </div>
                     {error && <div className="error-message">{error}</div>}
                     <button type="submit" className="submit-button">Login</button>
                 </form>
 
-                {/* Google Login Button */}
+                {/* Google Login Button with Icon */}
                 <div className="google-login">
                     <a href="/connect-google" className="google-login-button">
-                        Connect with Google
+                        <FaGoogle className="google-icon" /> Connect with Google
                     </a>
                 </div>
 
@@ -80,12 +86,6 @@ const LoginPage = () => {
                     <a href="/register">Register</a>
                 </div>
             </main>
-
-            <footer className="auth-footer">
-                <a href="/terms-of-use" className="footer-link">Terms of Use</a>
-                <a href="/privacy-policy" className="footer-link">Privacy Policy</a>
-                <a href="/contact-us" className="footer-link">Contact Us</a>
-            </footer>
         </div>
     );
 };

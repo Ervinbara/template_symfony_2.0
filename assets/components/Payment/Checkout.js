@@ -3,6 +3,7 @@ import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcEl
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
 import Select from 'react-select';
+import '../../styles/Pages/Checkout.css'; // Assurez-vous que le chemin est correct
 import countryList from 'react-select-country-list';
 
 const Checkout = () => {
@@ -16,7 +17,6 @@ const Checkout = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    // Convert country list into options with country code
     const countryOptions = countryList().getData().map(country => ({
         value: country.value,
         label: country.label
@@ -76,18 +76,12 @@ const Checkout = () => {
         }
 
         try {
-            console.log('Sending data:', {
-                payment_method_id: paymentMethod.id,
-                address,
-            });
-
             const response = await axios.post('/api/checkout', {
                 payment_method_id: paymentMethod.id,
                 address,
             });
 
             alert('Order placed successfully!');
-            console.log('Order placed successfully', response.data);
             navigate('/product');
         } catch (error) {
             console.error('Error submitting order', error.response.data);
@@ -98,7 +92,7 @@ const Checkout = () => {
     };
 
     return (
-        <div>
+        <div className="checkout-container">
             <h1>Checkout</h1>
             {error && <p>{error}</p>}
             <form onSubmit={handleSubmit}>
@@ -108,6 +102,7 @@ const Checkout = () => {
                         id="address"
                         value={selectedAddress}
                         onChange={(e) => setSelectedAddress(e.target.value)}
+                        className="address-select"
                     >
                         <option value="">-- Choisir une adresse --</option>
                         {addresses.map((address) => (
@@ -119,51 +114,56 @@ const Checkout = () => {
                     </select>
                 </div>
                 {selectedAddress === 'new' && (
-                    <div>
+                    <div className="address-fields">
                         <input
                             type="text"
                             placeholder="Street"
                             value={newAddress.street}
                             onChange={(e) => setNewAddress({ ...newAddress, street: e.target.value })}
+                            className="address-input"
                         />
                         <input
                             type="text"
                             placeholder="City"
                             value={newAddress.city}
                             onChange={(e) => setNewAddress({ ...newAddress, city: e.target.value })}
+                            className="address-input"
                         />
                         <input
                             type="text"
                             placeholder="State"
                             value={newAddress.state}
                             onChange={(e) => setNewAddress({ ...newAddress, state: e.target.value })}
+                            className="address-input"
                         />
                         <input
                             type="text"
                             placeholder="Zipcode"
                             value={newAddress.zipcode}
                             onChange={(e) => setNewAddress({ ...newAddress, zipcode: e.target.value })}
+                            className="address-input"
                         />
                         <Select
                             options={countryOptions}
                             value={countryOptions.find(option => option.value === newAddress.country)}
                             onChange={(option) => setNewAddress({ ...newAddress, country: option.value })}
                             placeholder="Select a country"
+                            className="country-select"
                         />
                     </div>
                 )}
 
-                <div>
+                <div className="payment-info">
                     <label>Numéro de carte :</label>
-                    <CardNumberElement />
+                    <CardNumberElement className="card-element" />
                 </div>
-                <div>
+                <div className="payment-info">
                     <label>Date d'expiration :</label>
-                    <CardExpiryElement />
+                    <CardExpiryElement className="card-element" />
                 </div>
-                <div>
+                <div className="payment-info">
                     <label>CVC :</label>
-                    <CardCvcElement />
+                    <CardCvcElement className="card-element" />
                 </div>
 
                 <button type="submit" disabled={loading}>

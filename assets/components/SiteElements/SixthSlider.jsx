@@ -15,7 +15,6 @@ const SixthSlider = () => {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                console.log('Fetched Sixth Sliders:', data); // Ajoutez ce log pour vérifier les données
                 setSlides(data);
             } catch (error) {
                 setError(error.message);

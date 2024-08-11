@@ -28,7 +28,7 @@ const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
     
-    const isAuthPage = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/cart';
+    const isAuthPage = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/cart' || location.pathname === '/checkout';
 
     useEffect(() => {
         if (searchQuery) {

@@ -5,7 +5,7 @@ import '../../styles/SiteElements/footer.css';
 
 const Footer = () => {
     const location = useLocation();
-    const isAuthPage = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/cart';
+    const isAuthPage = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/cart' || location.pathname === '/checkout';
 
     if (isAuthPage) {
         return null; // Hide the footer on login and register pages

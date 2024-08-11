@@ -55,6 +55,7 @@ class ShoppingCartController extends AbstractController
                 'product' => [
                     'id' => $product ? $product->getId() : null, // ID du produit, ou null si le produit n'existe pas
                     'name' => $product ? $product->getName() : 'Unknown Product', // Nom du produit, ou 'Unknown Product' si le produit n'existe pas
+                    'image' => $product ? $product->getImage() : null,
                     'description' => $product ? $product->getDescription() : null, // Description du produit, ou null si le produit n'existe pas
                     'price' => $product ? $product->getPrice() : null, // Prix du produit, ou null si le produit n'existe pas
                 ],
@@ -122,6 +123,7 @@ class ShoppingCartController extends AbstractController
                 'product' => [
                     'id' => $item->getProduct()->getId(),
                     'name' => $item->getProduct()->getName(),
+                    'image' => $item->getProduct()->getImage(),
                     'price' => $item->getProduct()->getPrice(),
                     'imageUrl' => $item->getProduct()->getImage(),
                 ],
@@ -255,6 +257,7 @@ class ShoppingCartController extends AbstractController
                 'product' => [
                     'id' => $product ? $product->getId() : null,
                     'name' => $product ? $product->getName() : 'Unknown Product',
+                    'image' => $product ? $product->getImage() : null,
                     'description' => $product ? $product->getDescription() : null,
                     'price' => $product ? $product->getPrice() : null,
                 ],
