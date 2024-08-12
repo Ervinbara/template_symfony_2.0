@@ -45,19 +45,9 @@ class ProductController extends AbstractController
     #[Route('/{id}', name: 'product_show', methods: ['GET'])]
     public function show($id): Response
     {
-        try {
-            $product = $this->productRepository->find($id);
-
-            if (!$product) {
-                throw $this->createNotFoundException('Product not found');
-            }
-
             return $this->render('product/show.html.twig', [
-                'product' => $product,
             ]);
-        } catch (\Exception $e) {
-            return new Response('Error: ' . $e->getMessage());
-        }
     }
+
  
 }

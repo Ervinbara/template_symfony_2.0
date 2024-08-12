@@ -10,6 +10,7 @@ import Checkout from './components/Payment/Checkout';
 import LoginForm from './components/Forms/LoginForm';
 import HomePage from './components/Pages/HomePage';
 import RegisterForm from './components/Forms/RegisterForm';
+import ProductDetail from './components/Product/ProductDetail'; // Importez la nouvelle page de détails
 import { AuthProvider } from './components/Security/AuthContext';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -19,12 +20,8 @@ import SearchResults from './components/SiteElements/SearchResults';
 import Footer from './components/SiteElements/Footer';  // Import Footer component
 import config from './components/Config/config';  // Import de la configuration
 
-console.log(process.env);
-
 const stripePromise = loadStripe(config.STRIPE_PUBLIC_KEY);
 
-// const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
-// console.log("Stripe Public Key:", process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -36,6 +33,7 @@ root.render(
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/product" element={<ProductList />} />
+                    <Route path="/product/:id" element={<ProductDetail />} /> {/* Ajoutez cette ligne */}
                     <Route path="/cart" element={<CartPage />} />
                     <Route path="/checkout" element={
                         <ProtectedRoute>

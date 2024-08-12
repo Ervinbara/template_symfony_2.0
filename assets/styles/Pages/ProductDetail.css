@@ -1,0 +1,120 @@
+/* ProductDetail.css */
+
+.product-detail-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+    flex: 1;
+    max-width: 50%;
+    text-align: center;
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.product-details {
+    flex: 1;
+    max-width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 30px;
+}
+
+.product-details h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: left;
+}
+
+.product-detail-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e67e22;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.product-detail-description {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.size-selector {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.size-selector p {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.sizes {
+    display: flex;
+    gap: 10px;
+}
+
+.size-button {
+    padding: 10px 15px;
+    border: 2px solid #3498db;
+    background-color: white;
+    color: #3498db;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.size-button.selected {
+    background-color: #3498db;
+    color: white;
+}
+
+.size-button:hover:not(.selected) {
+    background-color: #ecf0f1;
+}
+
+.add-to-cart-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.add-to-cart-button:hover {
+    background-color: #0056b3;
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+
+.back-button:hover {
+    text-decoration: underline;
+}
