@@ -2,61 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ProductCard from '../Product/ProductCard';
+import '../../styles/SiteElements/ProductList.css';
 
 const SearchResults = () => {
-    const [products, setProducts] = useState([]); // Tableau vide par défaut
-    const [filteredProducts, setFilteredProducts] = useState([]); // Tableau vide par défaut
+    const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const location = useLocation();
 
-    // Logique en faisant une requête de recherche coté back
-    //  useEffect(() => {
-    //     const fetchProducts = async () => {
-    //         try {
-    //             const queryParams = new URLSearchParams(location.search);
-    //             const query = queryParams.get('query');
-
-    //             if (query) {
-    //                 // Fetch filtered products from backend
-    //                 const response = await axios.get(`/search?query=${query}`);
-    //                 console.log('Données filtrées reçues:', response.data);
-                    
-    //                 // Extraire le tableau de produits
-    //                 const productsData = response.data;
-    //                 if (Array.isArray(productsData)) {
-    //                     setFilteredProducts(productsData);
-    //                 } else {
-    //                     console.error('Les données extraites ne sont pas un tableau:', productsData);
-    //                 }
-    //             } else {
-    //                 // Optionnel : si aucun terme de recherche, vous pouvez récupérer tous les produits ou un message
-    //                 // const response = await axios.get('/api/products');
-    //                 // const productsData = response.data['hydra:member'];
-    //                 // setProducts(productsData);
-    //                 // setFilteredProducts(productsData);
-    //             }
-    //         } catch (error) {
-    //             console.error('Erreur lors de la récupération des produits:', error);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-
-    //     fetchProducts();
-    // }, [location.search]);
-
-    // Fetch products from API
+    // Fetch all products on initial load
     useEffect(() => {
         const fetchProducts = async () => {
             try {
                 const response = await axios.get('/api/products');
-                console.log('Données des produits reçues:', response.data);
-                
-                // Extraire le tableau de produits
                 const productsData = response.data['hydra:member'];
                 if (Array.isArray(productsData)) {
                     setProducts(productsData);
-                    setFilteredProducts(productsData); // Initial display
+                    setFilteredProducts(productsData);
                 } else {
                     console.error('Les données extraites ne sont pas un tableau:', productsData);
                 }
@@ -76,31 +38,45 @@ const SearchResults = () => {
         const query = queryParams.get('query');
 
         if (query) {
-            if (Array.isArray(products)) {
-                const filtered = products.filter(product =>
-                    product.name.toLowerCase().includes(query.toLowerCase())
-                );
-                setFilteredProducts(filtered);
-            } else {
-                console.error('`products` n\'est pas un tableau:', products);
-            }
+            const filtered = products.filter(product =>
+                product.name.toLowerCase().includes(query.toLowerCase())
+            );
+            setFilteredProducts(filtered);
         } else {
             setFilteredProducts(products);
         }
     }, [location.search, products]);
 
+    // Function to add a product to the cart
+    const addToCart = async (productId) => {
+        console.log(`Adding product ID: ${productId} to cart`);
+
+        try {
+            const dataToSend = { product_id: productId, quantity: 1 };
+            console.log('Data being sent to the server:', dataToSend);
+
+            const response = await axios.post('/api/cart/add', dataToSend);
+            console.log('Server response after adding product:', response.data);
+
+            // Optionally, update cart state or display a success message here
+
+        } catch (error) {
+            console.error('Error adding to cart:', error.response ? error.response.data : error.message);
+        }
+    };
+
     return (
-        <div className="container search-results">
-            <h1>Résultats de recherche</h1>
+        <div className="container product-list">
+            <h1 className="product-list-title">Résultats de recherche</h1>
             {loading ? (
                 <p>Chargement...</p>
             ) : filteredProducts.length > 0 ? (
-                <div className="row product-list-grid">
-                    {filteredProducts.map(product => (
-                        <div className="col-md-4" key={product.id}>
-                            <ProductCard product={product} />
-                        </div>
-                    ))}
+                <div className="product-list-content">
+                    <div className="product-list-grid">
+                        {filteredProducts.map(product => (
+                            <ProductCard key={product.id} product={product} addToCart={addToCart} />
+                        ))}
+                    </div>
                 </div>
             ) : (
                 <p>Aucun produit trouvé.</p>
