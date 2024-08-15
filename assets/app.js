@@ -17,6 +17,7 @@ import "slick-carousel/slick/slick-theme.css";
 import ProtectedRoute from './components/Security/ProtectedRoute';
 import Header from './components/SiteElements/Header';
 import SearchResults from './components/SiteElements/SearchResults';
+import ProfilePage from './components/SiteElements/ProfilePage'; // Assure-toi que le chemin est correct
 import Footer from './components/SiteElements/Footer';  // Import Footer component
 import config from './components/Config/config';  // Import de la configuration
 
@@ -46,6 +47,7 @@ root.render(
                     <Route path="/register" element={<RegisterForm />} />
                     <Route path="/logout" element={<HomePage />} />
                     <Route path="/search" element={<SearchResults />} />
+                    <Route path="/profile" element={<ProfilePage />} /> {/* Ajout de la route pour le profil */}
                 </Routes>
                 <Footer /> 
             </Router>

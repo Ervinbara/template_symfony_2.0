@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../Security/AuthContext'; // Utilisation de useAuth au lieu d'AuthContext
 import axios from 'axios';
 
 const messages = [
@@ -17,6 +18,7 @@ const fakeSuggestion = [
 ];
 
 const Header = () => {
+    const { isAuthenticated, logout } = useAuth(); // Utilisation du hook useAuth
     const [searchQuery, setSearchQuery] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -96,8 +98,13 @@ const Header = () => {
                     <Link to="/store-locator">Trouver un magasin</Link>
                     <Link to="/help">Aide</Link>
                     <Link to="/join">Rejoins-nous</Link>
-                    <Link to="/login">S'identifier</Link>
-                </div>
+                    <Link to="/profile">Profil</Link>
+
+                    {isAuthenticated ? (
+                        <Link to="/logout">Déconnexion</Link>
+                    ) : (
+                        <Link to="/login">S'identifier</Link>
+                    )}               </div>
             </div>
 
             {/* Main Navigation */}
@@ -175,7 +182,11 @@ const Header = () => {
                     <li><Link to="/store-locator">Trouver un magasin</Link></li>
                     <li><Link to="/help">Aide</Link></li>
                     <li><Link to="/join">Rejoins-nous</Link></li>
-                    <li><Link to="/login">S'identifier</Link></li>
+                    {isAuthenticated ? (
+                        <li><Link to="/logout">Déconnexion</Link></li>
+                    ) : (
+                        <li><Link to="/login">S'identifier</Link></li>
+                    )}
                 </ul>
             </div>
 

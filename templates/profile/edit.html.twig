@@ -1,33 +1,9 @@
+{# templates/search/search.html.twig #}
+
 {% extends 'base.html.twig' %}
 
+{% block title %}Profil utilisateur{% endblock %}
+
 {% block body %}
-    <h1>Profil</h1>
 
-    {{ form_start(userForm) }}
-        {{ form_row(userForm.firstName) }}
-        {{ form_row(userForm.lastName) }}
-        {{ form_row(userForm.email) }}
-        {{ form_row(userForm.password) }}
-        <button type="submit">Mettre à jour</button>
-    {{ form_end(userForm) }}
-
-    <h2>Ajouter une adresse</h2>
-    {{ form_start(addressForm) }}
-        {{ form_row(addressForm.street) }}
-        {{ form_row(addressForm.city) }}
-        {{ form_row(addressForm.state) }}
-        {{ form_row(addressForm.zipcode) }}
-        {{ form_row(addressForm.country) }}
-        <button type="submit">Ajouter</button>
-    {{ form_end(addressForm) }}
-
-    <h2>Mes adresses</h2>
-    <ul>
-        {% for address in addresses %}
-            <li>
-                {{ address.street }}, {{ address.city }}, {{ address.state }}, {{ address.zipcode }}, {{ address.country }}
-                <a href="{{ path('profile_address_delete', {id: address.id}) }}">Supprimer</a>
-            </li>
-        {% endfor %}
-    </ul>
 {% endblock %}
