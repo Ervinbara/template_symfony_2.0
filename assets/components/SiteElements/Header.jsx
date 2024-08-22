@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react'; // Ajout de useContext
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../Security/AuthContext'; // Utilisation de useAuth au lieu d'AuthContext
+import { CartContext } from '../contexts/CartContext';  // Assure-toi d'importer également ton CartContext
 import axios from 'axios';
 
 const messages = [
@@ -19,6 +20,7 @@ const fakeSuggestion = [
 
 const Header = () => {
     const { isAuthenticated, logout } = useAuth(); // Utilisation du hook useAuth
+    const { cartItems } = useContext(CartContext); // Utilisation du contexte du panier
     const [searchQuery, setSearchQuery] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -86,8 +88,10 @@ const Header = () => {
         setSearchSidebarOpen(false);
     };
 
+    const cartItemCount = cartItems.reduce((count, item) => count + item.quantity, 0);
+
     if (isAuthPage) {
-        return null; // Hide the header on login and register pages
+        return null; // Cache le header sur les pages d'authentification et de paiement
     }
 
     return (
@@ -101,17 +105,18 @@ const Header = () => {
                     <Link to="/profile">Profil</Link>
 
                     {isAuthenticated ? (
-                        <Link to="/logout">Déconnexion</Link>
+                        <Link to="/logout" onClick={logout}>Déconnexion</Link>
                     ) : (
                         <Link to="/login">S'identifier</Link>
-                    )}               </div>
+                    )}
+                </div>
             </div>
 
             {/* Main Navigation */}
             <div className="main-nav">
                 <div className="logo">
                     <Link to="/">
-                        <img src="/path/to/logo.png" alt="Logo" />
+                        <img src="http://localhost:8000/images/logo/nike.svg" alt="Logo Nike" />
                     </Link>
                 </div>
 
@@ -150,6 +155,7 @@ const Header = () => {
                         </Link>
                         <Link to="/cart" className="icon">
                             <i className="fa fa-shopping-cart"></i>
+                            {cartItemCount > 0 && <span className="cart-badge">{cartItemCount}</span>}
                         </Link>
                     </div>
                 </div>
@@ -183,7 +189,7 @@ const Header = () => {
                     <li><Link to="/help">Aide</Link></li>
                     <li><Link to="/join">Rejoins-nous</Link></li>
                     {isAuthenticated ? (
-                        <li><Link to="/logout">Déconnexion</Link></li>
+                        <li><Link to="/logout" onClick={logout}>Déconnexion</Link></li>
                     ) : (
                         <li><Link to="/login">S'identifier</Link></li>
                     )}

@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import '../../styles/Pages/ProductDetail.css'; // Assurez-vous d'avoir ce fichier CSS
+import '../../styles/Pages/ProductDetail.css';
+import { CartContext } from '../contexts/CartContext';  // Importer le contexte du panier
 
 const ProductDetail = () => {
-    const { id } = useParams(); // Récupérer l'ID du produit depuis l'URL
+    const { id } = useParams(); 
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [selectedSize, setSelectedSize] = useState(null); // État pour la taille sélectionnée
+    const [selectedSize, setSelectedSize] = useState(null); 
+    const [successMessage, setSuccessMessage] = useState('');
+    const { addToCart } = useContext(CartContext);  // Utiliser le contexte du panier
 
-    const fakeSizes = ['39', '40', '41', '42', '43']; // Fausses données pour les tailles
+    const fakeSizes = ['39', '40', '41', '42', '43']; 
 
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const { data } = await axios.get(`/api/products/${id}`); // Utiliser l'ID dans l'URL de la requête
+                const { data } = await axios.get(`/api/products/${id}`);
                 setProduct(data);
                 setLoading(false);
             } catch (error) {
@@ -29,29 +32,18 @@ const ProductDetail = () => {
         }
     }, [id]);
 
-    const addToCart = async () => {
+    const handleAddToCart = () => {
         if (!selectedSize) {
             alert('Please select a size before adding to cart.');
             return;
         }
 
-        try {
-            const dataToSend = { product_id: product.id, quantity: 1, size: selectedSize }; // Ajoutez la taille ici
-            console.log('Data being sent to the server:', dataToSend);
-
-            const response = await axios.post('/api/cart/add', dataToSend);
-            console.log('Server response after adding product:', response.data);
-
-            // Optionnel : afficher un message ou mettre à jour l'état du panier
-            // alert('Product added to cart successfully!');
-        } catch (error) {
-            console.error('Error adding to cart:', error.response ? error.response.data : error.message);
-        }
+        addToCart(product.id, 1);  // Ajouter le produit au panier avec la taille sélectionnée
+        setSuccessMessage('Produit ajouté au panier avec succès !');
     };
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
-
     if (!product) return <p>No product found.</p>;
 
     return (
@@ -61,7 +53,7 @@ const ProductDetail = () => {
             </div>
             <div className="product-details">
                 <h1>{product.name}</h1>
-                <p className="product-detail-price">Price: ${product.price}</p>
+                <p className="product-detail-price">Price: {product.price} €</p>
                 <p className="product-detail-description">{product.description}</p>
 
                 {/* Sélecteur de taille */}
@@ -80,7 +72,8 @@ const ProductDetail = () => {
                     </div>
                 </div>
 
-                <button onClick={addToCart} className="add-to-cart-button">Add to Cart</button>
+                <button onClick={handleAddToCart} className="add-to-cart-button">Add to Cart</button>
+                {successMessage && <p className="success-message">{successMessage}</p>}
                 <Link to="/product" className="back-button">Back to Products</Link>
             </div>
         </div>

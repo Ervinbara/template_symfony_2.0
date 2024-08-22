@@ -136,12 +136,12 @@ class AppFixtures extends Fixture
 
         // Création de 2 bannières
         $banners = [
-            ['type' => 'image', 'src' => '/images/banners/banner-roni.jpg', 'altText' => 'Banner 1'],
+            ['type' => 'image', 'src' => '/images/banners/zidane-2.jpg', 'altText' => 'Banner 1'],
             // ['type' => 'image', 'src' => '/images/banners/roni.jpg', 'altText' => 'Banner 2'],
         ];
 
         $endBanners = [
-            ['type' => 'image', 'src' => '/images/banners/roni.jpg', 'altText' => 'Banner 2'],
+            ['type' => 'image', 'src' => '/images/end-banners/roni.jpg', 'altText' => 'Banner 2'],
         ];
 
         foreach ($banners as $bannerData) {

@@ -1,4 +1,4 @@
-# E-Commerce Application
+# E-Commerce Application (In progress)
 
 This is a full-stack e-commerce application built using Symfony for the backend and React for the frontend. The application includes features such as product listings, category filtering, a shopping cart, user authentication with Google OAuth, and Stripe integration for payments. The main goal is to develop a fully modular and administratively manageable interface.
 
